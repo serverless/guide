@@ -2,7 +2,7 @@
 
 The open-source guide on serverless architectures.
 
-**Status -** Determining structure and writing initial documents
+**Status -** Determining structure, starting writing, looking for contributors -- just submit a PR :)
 
 ## Contents
 
