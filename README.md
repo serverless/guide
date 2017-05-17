@@ -133,3 +133,5 @@ The open-source definitive guide on serverless architectures.
     * IBM OpenWhisk
     * Webtask.io
     * Iron.io
+
+* [Credits](./credits.md)
