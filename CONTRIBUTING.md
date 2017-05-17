@@ -31,7 +31,7 @@ A very lean and simple review process will ensure all is good, and then the PRs 
 
 Since we as a community will be writing and contributing to different sections of the guide, it will need a lot of love and a bit of guidance and discipline. Here are a few things that can make the guide be of high-quality content that is coherent and consistent.
 
-**Vocabulary:** Use the serverless [terminologies](./terminology.md) guide to keep the verbiage consistent.
+**Vocabulary:** Use the [serverless terminologies](./terminology.md) guide to keep the verbiage consistent.
 
 **Voice**: Write in second-person, active voice so that the content is concise, to the point yet personable.
 
