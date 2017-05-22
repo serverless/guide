@@ -2,6 +2,10 @@
 
 The open-source definitive guide on serverless architectures.
 
+## Contributions
+
+We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) for details.
+
 ## Contents
 
 * [Introduction](./introduction.md)
@@ -133,3 +137,5 @@ The open-source definitive guide on serverless architectures.
     * IBM OpenWhisk
     * Webtask.io
     * Iron.io
+
+* [Credits](./credits.md)
