@@ -21,46 +21,46 @@
 
 
 ## Serverless Framework
-- Drives the development/deployment lifecycle of a [Serverless Service](#serverless-service)
-- Used to install [Serverless Functions](#serverless-function) and [Serverless Plugins](#serverless-plugin)
+- Drives the development/deployment lifecycle of a [Serverless Service](#service)
+- Used to install [Functions](#function) and [Plugins](#plugin)
 - Makes use of Plugins to extend the functionality of the framework.
 
 
-## Serverless Plugin
+## Plugin
 - A Plugin is where the business logic lives for the functionality of the [Serverless Framework](#serverless-framework).
 
 
-## Serverless Registry
+## Registry
 - A service for registering and retrieving code packages for use in the [Serverless Framework](#serverless-framework).
 - Registry is primarily used by framework for building [Serverless Services](#serverless-service).
 
 
-## Serverless FDK
+## FDK
 - Provides a simple middleware abstraction
 - Enables runtime interaction with [Serverless Services](#serverless-service)
   + Executing functions
   + Dispatching events
 
 
-## Serverless Gateway
-- Every [Serverless Service](#serverless-service) automatically has a Serverless Gateway provisioned on deployment.
-- The Gateway enables execution of the [Serverless Functions](#serverless-function) and handles propagation of [Serverless Events](#serverless-event).
+## Gateway
+- Every [Serverless Service](#serverless-service) automatically has a Gateway provisioned on deployment.
+- The Gateway enables execution of the [Functions](#function) and handles propagation of [Events](#event).
 
 
-## Serverless Discovery
+## Discovery
 - A service for registering and retrieving information on how to dispatch requests to [Serverless Services](#serverless-service).
-- Discovery is primarily used by the [Serverless FDK](#serverless-fdk) for retrieving info on how to make calls and emit events to [Serverless Services](#serverless-service) within code.
+- Discovery is primarily used by the [FDK](#fdk) for retrieving info on how to make calls and emit events to [Serverless Services](#serverless-service) within code.
 - A [Serverless Service](#serverless-service) is automatically registered with Discovery when it is registered with the [Serverless Platform](#serverless-platform).
 
-## Serverless Function
-- Serverless Functions represent a basic unit of executable code.
+## Function
+- Functions represent a basic unit of executable code.
 
-### *Unprovisioned Serverless Functions*
-- A zip file of a Serverless Function which you can download from the [Serverless Registry](#serverless-registry) and provision on your own infrastructure (e.g., AWS account).
+### *Unprovisioned Functions*
+- A zip file of a Function which you can download from the [Registry](#registry) and provision on your own infrastructure (e.g., AWS account).
 
-### *Provisioned Serverless Functions*
-- A [Serverless Function](#serverless-function) that is provisioned on someone's infrastructure and able to be invoked by someone else.
+### *Provisioned Functions*
+- A [Function](#function) that is provisioned on someone's infrastructure and able to be invoked by someone else.
 - All previous versions are expected to be kept available (which is possible w/ FaaS since all versions can be kept on a provider, awaiting an invocation for no additional cost/maintenance).
 
-## Serverless Events
+## Event
 - Events are a unit of data that are sent between services
