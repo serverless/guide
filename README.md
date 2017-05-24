@@ -71,7 +71,5 @@ We want your contributions to this guide. We would like you to bring in your exp
       * Azure Functions
       * Google CloudFunctions
       * IBM OpenWhisk
-      * Webtask.io
-      * Iron.io
 
 * [Credits](./credits.md)
