@@ -41,13 +41,19 @@ Azure Functions is Microsoft's serverless compute offering, announced in spring 
 
 [More details](./azure.md)...
 
-#### Google CloudFunctions
+#### Google Cloud Functions
 
+Cloud Functions is Google's serverless compute offering, with Beta announced in spring of 2017.
+
+> A serverless environment to build and connect cloud services. Construct applications from bite-sized business logic billed to the nearest 100 milliseconds, only while your code is running. Serve users from zero to planet-scale, all without managing any infrastructure.
 
 [More details](./gcf.md)...
 
 #### IBM OpenWhisk
 
+OpenWhisk is IBM's serverless copute offering, with experimental service announced in early 2016.
+
+> OpenWhisk is an event-driven compute platform that executes application logic in response to events or through direct invocations–from web/mobile apps or other endpoints. The OpenWhisk serverless architecture accelerates development as a set of small, distinct, and independent actions. By abstracting away infrastructure, OpenWhisk frees members of small teams to rapidly work on different pieces of code simultaneously, keeping the overall focus on creating user experiences customers want.
 
 [More details](./openwhisk.md)...
 
