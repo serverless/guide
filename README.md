@@ -63,15 +63,13 @@ We want your contributions to this guide. We would like you to bring in your exp
     * Monitoring
     * Logging/Auditing
 
-* [Providers](./providers/index.md)
-    * Introduction
-    * Comparison/Matrix of Features
+* Providers
+    * [Introduction](./providers/index.md#introduction)
+    * [A Comparative Look](./providers/index.md#a-comparative-look)
     * The Players
-      * AWS Lambda
-      * Azure Functions
-      * Google CloudFunctions
-      * IBM OpenWhisk
-      * Webtask.io
-      * Iron.io
+      * [AWS Lambda](./providers/aws.md)
+      * [Azure Functions](./providers/azure.md)
+      * [Google Cloud Functions](./providers/gcf.md)
+      * [IBM OpenWhisk](./providers/openwhisk.md)
 
 * [Credits](./credits.md)

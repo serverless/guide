@@ -50,7 +50,6 @@ All the data about metrics and logs can be viewed from the CloudWatch console.
 
 CloudWatch also provides alerting capabilities to create alarms and receive notifications of API activity that are captured by [CloudTrail](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html).
 
-
 ### Debugging & Diagnostics
 
 [AWS X-Ray](https://aws.amazon.com/xray/), helps identify, analyze and debug issues in production for applications built with microservices architecture. It helps in finding root cause and troubleshooting issues.
