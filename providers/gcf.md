@@ -22,7 +22,7 @@ Supports only Javascript.
 
 ### Security
 
-Googel Cloud Functions provide the ability to provide access control to create and manage functions by adding users to teams and by granting them permissions using [Cloud IAM](https://cloud.google.com/iam/docs/overview) roles. Cloud Functions currently only supports primitive roles.
+Google Cloud Functions provide the ability to provide access control to create and manage functions by adding users to teams and by granting them permissions using [Cloud IAM](https://cloud.google.com/iam/docs/overview) roles. Cloud Functions currently only supports primitive roles.
 
 ### Tooling
 
