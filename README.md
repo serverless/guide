@@ -1,75 +1,58 @@
 # Serverless Guide
 
+*By the community, curated by Serverless, Inc.*
+
 The open-source definitive guide on serverless architectures.
 
-## Contributions
+## How to Contribute to the Serverless Guide
 
-We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) for details.
+- Are you excited about the serverless movement and talk about its future?
+- Do you have an example of a serverless usecase that you want to highlight?
+- Are you a developer who has expertise in a particular serverless provider?
+- Do you work for a provider and see some inconsistencies in the content?
+- Is there an architectural pattern that you feel solves a specific usecase?
+- Do you have a success story that you would like to share?
+- Have you been successful with a specific vendor or platform?
+- Do you have an opinion/quote that you would like to add in a section?
 
-## Contents
+**Then you have lots to share with the community.**
 
-* [Introduction](./introduction.md)
-    * The Evolution
-    * What Is Serverless?
-        * Misconceptions around Serverless
-        * Characteristics
-        * Driving Factors/Benefits
-    * Serverless In The Cloud Computing Paradigm
-    * Serverless vs. PaaS
-    * The Serverless Framework
-    * The Serverless Platform
-      
-* [Architecture](./architecture.md)
-    * A look back
-    * The Serverless Architectural Pattern
-    * Event-driven Architecture
-    * Partitioning Logic
+We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) and the [contributor code of conduct](./CODE_OF_CONDUCT.md) for details. 
 
-* [Adoption](./adoption.md)
+## Outline
 
-* [Security](./security.md)
-    * Perspective
-    * Surface Area
-    * Data Sharing 
-    * Integrations with Auth services and providers
-    * Access Management
+A general outline of what the guide will cover:
 
-* [Case Studies](./case_studies/index.md)
-    * Backends for Web, Mobile & IoT
-    * Data Processing Pipelines
-    * Webhooks
-    * Chatbots
-    * All Event-Driven Workflows
-    * Devops/Tooling Automation
-    * CRON Jobs
+* The evolution to serverless?
+* What is serverless?
+* What are some of the misconceptions around serverless?
+* What are the benefits of serverless?
+* How is the adoption for serverless?
+* A look at the Serverless Framework
+* What is an event-driven architecture?
+* What are the security concerns around serverless?
+* The pathway to serverless development
+* Deploying and Testing serverless applications
+* How is serverless changing DevOps?
+* Debugging and Monitoring serverless applications
+* A comparative look at the serverless providers
+* Case studies using serverless technologies
+* A look at the Serverless Platform
 
-* [Development](./dev/index.md)
-    * Culture
-    * Pathway to Serverless Development
-    * Project Structure
-    * Continous Integration/Development
-    * Deployment  
-    * Testing
-    * Examples
-    
-* [Operations](./ops/index.md)
-    * Misconceptions about NoOps
-    * Zero Administration    
-    * Stages & Environments
-    * Blue/Green Deployments
-    * Performance Management
-    * Distributed Tracing
-    * Debugging
-    * Monitoring
-    * Logging/Auditing
+Checkout the [full outline](./source/README.md) of the guide. 
 
-* Providers
-    * [Introduction](./providers/index.md#introduction)
-    * [A Comparative Look](./providers/index.md#a-comparative-look)
-    * The Players
-      * [AWS Lambda](./providers/aws.md)
-      * [Azure Functions](./providers/azure.md)
-      * [Google Cloud Functions](./providers/gcf.md)
-      * [IBM OpenWhisk](./providers/openwhisk.md)
+## Credits
 
-* [Credits](./credits.md)
+To recognize your contributions to the guide, your name will be mentioned on the page or section that you have contibuted content to.
+
+## License
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+## Thanks in Advance
+
+The Serverless Guide is a community-driven effort, and we thank you for your contributions.
+
+Thanks, 
+
+Serverless Team
