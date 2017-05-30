@@ -1,25 +1,10 @@
 # Serverless Guide
 
-*By the community, curated by Serverless, Inc.*
+*By the community, curated by [Serverless, Inc.](https://serverless.com/)*
+
+## About the Guide
 
 The open-source definitive guide on serverless architectures.
-
-## How to Contribute to the Serverless Guide
-
-- Are you excited about the serverless movement and talk about its future?
-- Do you have an example of a serverless usecase that you want to highlight?
-- Are you a developer who has expertise in a particular serverless provider?
-- Do you work for a provider and see some inconsistencies in the content?
-- Is there an architectural pattern that you feel solves a specific usecase?
-- Do you have a success story that you would like to share?
-- Have you been successful with a specific vendor or platform?
-- Do you have an opinion/quote that you would like to add in a section?
-
-**Then you have lots to share with the community.**
-
-We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) and the [contributor code of conduct](./CODE_OF_CONDUCT.md) for details. 
-
-## Outline
 
 A general outline of what the guide will cover:
 
@@ -41,9 +26,28 @@ A general outline of what the guide will cover:
 
 Checkout the [full outline](./source/README.md) of the guide. 
 
+## How to Contribute to the Serverless Guide
+
+- Are you excited about the serverless movement and talk about its future?
+- Do you have an example of a serverless usecase that you want to highlight?
+- Are you a developer who has expertise in a particular serverless provider?
+- Do you work for a provider and see some inconsistencies in the content?
+- Is there an architectural pattern that you feel solves a specific usecase?
+- Do you have a success story that you would like to share?
+- Have you been successful with a specific vendor or platform?
+- Do you have an opinion/quote that you would like to add in a section?
+
+**Then you have lots to share with the community.**
+
+We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) and the [contributor code of conduct](./CODE_OF_CONDUCT.md) for details. 
+
 ## Credits
 
 To recognize your contributions to the guide, your name will be mentioned on the page or section that you have contibuted content to.
+
+## Get in Touch
+
+We would love to have your feedback. Or, if you have any questions, please let us know at hello@serverless.com.
 
 ## License
 

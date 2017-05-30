@@ -2,11 +2,12 @@
 
 It is very easy to contribute:
 
-- Pick a section of the guide to contribute.
-- Open an issue describing the section and/or sub-sections that you will be working on and assign the issue to yourself.
+- Check the [project page](https://github.com/serverless/guide/projects/1) to see who is working on what pages/sections of the guide.
+- Pick a page/section of the guide to contribute.
+- Open an issue describing the page/section that you will be working on and assign the issue to yourself.
 - Make sure you have read the [Guidelines](#guidelines) section.
 - Write to your heart's content and proof read it. 
-- Commit your changes and open a PR.
+- Commit your changes to a branch and open a PR.
 
 It is that simple!!!
 
