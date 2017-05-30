@@ -1,9 +1,7 @@
 ## Security
 
-
-### Perspective
-
-* How is security different in serverless world? 
+* How is security different in serverless world?
+* Access Control groups and permission sets
 
 ### Surface Area
 
@@ -13,6 +11,7 @@
 ### Data Sharing 
 
 * How is data shared? 
+* How is data isolated?
 * What are some of the architectural considerations for data sharing in the serverless world?
 
 ### Integrations

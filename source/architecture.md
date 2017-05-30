@@ -1,6 +1,6 @@
 ## Architectuure
 
-### A look back
+### A Look Back
 * n-Tier Architecture
 * SOA
 * Microservices Architecture
@@ -13,7 +13,7 @@
   * Focus on building than managing infrastructure
   * Cooperative Development (sharing functions) 
 
-### Event-driven Architecture
+### Event-Driven Architecture
 * Cooperative Development (sharing events) 
 
 ### Partitioning Logic

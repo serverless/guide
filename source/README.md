@@ -3,30 +3,55 @@
 * [Introduction](./introduction.md)
     * The Evolution
     * What Is Serverless?
-        * Misconceptions around Serverless
-        * Characteristics
-        * Driving Factors/Benefits
     * Serverless In The Cloud Computing Paradigm
     * Serverless vs. PaaS
-    * The Serverless Framework
-    * The Serverless Platform
       
 * [Architecture](./architecture.md)
-    * A look back
+    * A Look Back
     * The Serverless Architectural Pattern
-    * Event-driven Architecture
+    * Event-Driven Architecture
     * Partitioning Logic
 
 * [Adoption](./adoption.md)
 
+* [Development](./dev/README.md)
+    * [Culture](.dev/culture.md)
+    * [Pathway to Serverless Development](./dev/pathway_to_sls.md)
+    * [Project Structure](./dev/project_structure.md)
+    * [Deployment](./dev/deployment.md)
+    * [Testing](./dev/testing.md)
+    * [Debugging](./dev/debugging.md)
+    * [Examples](./dev/examples.md)
+    
+* [Operations](./ops/README.md)
+    * Misconceptions about NoOps
+    * Zero Administration    
+    * Stages & Environments
+    * Blue/Green Deployments
+    * Performance Management
+    * Distributed Tracing
+    * Troubleshooting
+    * Monitoring
+    * Logging/Auditing
+
 * [Security](./security.md)
-    * Perspective
     * Surface Area
     * Data Sharing 
     * Integrations with Auth services and providers
     * Access Management
 
-* [Case Studies](./case_studies/index.md)
+* [The Serverless Platform](./platform/README.md)
+
+* [Providers](./providers/README.md)
+    * [Introduction](./providers/README.md#introduction)
+    * [A Comparative Look](./providers/README.md#a-comparative-look)
+    * The Players
+      * [AWS Lambda](./providers/aws.md)
+      * [Azure Functions](./providers/azure.md)
+      * [Google Cloud Functions](./providers/gcf.md)
+      * [IBM OpenWhisk](./providers/openwhisk.md)
+
+* [Case Studies](./case_studies/README.md)
     * Backends for Web, Mobile & IoT
     * Data Processing Pipelines
     * Webhooks
@@ -35,31 +60,3 @@
     * Devops/Tooling Automation
     * CRON Jobs
 
-* [Development](./dev/index.md)
-    * Culture
-    * Pathway to Serverless Development
-    * Project Structure
-    * Continous Integration/Development
-    * Deployment  
-    * Testing
-    * Examples
-    
-* [Operations](./ops/index.md)
-    * Misconceptions about NoOps
-    * Zero Administration    
-    * Stages & Environments
-    * Blue/Green Deployments
-    * Performance Management
-    * Distributed Tracing
-    * Debugging
-    * Monitoring
-    * Logging/Auditing
-
-* Providers
-    * [Introduction](./providers/index.md#introduction)
-    * [A Comparative Look](./providers/index.md#a-comparative-look)
-    * The Players
-      * [AWS Lambda](./providers/aws.md)
-      * [Azure Functions](./providers/azure.md)
-      * [Google Cloud Functions](./providers/gcf.md)
-      * [IBM OpenWhisk](./providers/openwhisk.md)

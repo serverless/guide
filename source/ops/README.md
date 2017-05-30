@@ -1,11 +1,23 @@
 ## Operations
 
-* Misconceptions about NoOps
-* Zero Administration
-* Stages & Environments
-* Blue/Green Deployments
-* Performance Management
-* Distributed Tracing
-* Debugging
-* Monitoring
-* Logging/Auditing
+
+
+### Misconceptions about NoOps
+
+### How has DevOps evolved for serverless?
+
+### Zero Administration
+
+### Stages & Environments
+
+### Blue/Green Deployments
+
+### Performance Management
+
+### Distributed Tracing
+
+### Troubleshooting 
+
+### Monitoring
+
+### Logging/Auditing
