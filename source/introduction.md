@@ -6,7 +6,9 @@
 
 ### What Is Serverless?
 
-#### Misconceptions around Serverless
+### Misconceptions
+* Misconceptions around serverless
+* Debate around NoOps
 
 #### Characteristics
 * Execute Code On Demand
@@ -31,28 +33,6 @@
 
 ### Serverless vs. PaaS
 
-### The Serverless Framework
-* Getting Started (link to docs)
-* Abstraction
-* Functions
-* Services
-* Plugins
 
-### The Serverless Platform
 
-#### Vision
-* Event-driven everything
-* Shared Functions
-* Publishing and Consuming Services
-* Events Sharing
-
-#### Getting Started (link to docs)
-
-#### Registry
-
-#### FDK
-
-#### Discovery
-
-#### Events
 
