@@ -8,6 +8,12 @@ From an application development perspective, serverless computing makes function
 
 Serverless computing is *not* here to replace every other computing platform out there. It is here to augment them. It will help us re-think how we build applications for tomorrow. It is a disruptive technology that will change how we code.
 
+<hr>
+
+**Section Credits:** Rupak Ganguly (@rupakg)
+
+<hr>
+
 ### The Evolution
 * How did we get here?
 * Bare metal, VMs/IaaS, Containers, PaaS, Serverless
@@ -20,6 +26,12 @@ Events originating inside or outside of your application/service can trigger you
 
 The unit of consumption and billing, is in milliseconds, and is based on the compute time and resources that were used by your functions. There is no idle compute time. *There is no paying for idle time.* Load on your functions are transparently handled at the compute provider level, and your functions are auto-scaled to meet the needs of the application. The focus is changed from being infrastructure-centric to being code-centric.
  
+
+<hr>
+
+**Section Credits:** Rupak Ganguly (@rupakg)
+
+<hr>
 
 #### Misconceptions
 * Misconceptions around serverless
@@ -44,11 +56,6 @@ The unit of consumption and billing, is in milliseconds, and is based on the com
 * Agility
 * Team Autonomy 
 
-<hr>
-
-**Section Credits:** Rupak Ganguly (@rupakg)
-
-<hr>
 
 ### Serverless In The Cloud Computing Paradigm
 
