@@ -60,3 +60,4 @@
     * Devops/Tooling Automation
     * CRON Jobs
 
+* [Glossary](./glossary.md)
