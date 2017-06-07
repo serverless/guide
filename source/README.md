@@ -22,12 +22,13 @@
     * [Testing](./dev/testing.md)
     * [Debugging](./dev/debugging.md)
     * [Examples](./dev/examples.md)
-    
+
+* [Toolsets](./toolsets/README.md) 
+
 * [Operations](./ops/README.md)
     * Misconceptions about NoOps
     * Zero Administration    
-    * Stages & Environments
-    * Blue/Green Deployments
+    * Managing Stages & Environments
     * Performance Management
     * Distributed Tracing
     * Troubleshooting
@@ -39,8 +40,6 @@
     * Data Sharing 
     * Integrations with Auth services and providers
     * Access Management
-
-* [The Serverless Platform](./platform/README.md)
 
 * [Providers](./providers/README.md)
     * [Introduction](./providers/README.md#introduction)
