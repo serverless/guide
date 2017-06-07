@@ -1,4 +1,4 @@
-## Architectuure
+## Architecture
 
 ### A Look Back
 * n-Tier Architecture
