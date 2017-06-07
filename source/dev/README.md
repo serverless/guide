@@ -65,6 +65,6 @@ The possibilities are endless, and we are on the threshold of unleashing the pow
 
 <hr>
 
-**Section Credits:** Rupak Ganguly (@rupakg)
+**Credits:** Rupak Ganguly (@rupakg)
 
 <hr>
