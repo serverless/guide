@@ -6,7 +6,7 @@
     * Serverless In The Cloud Computing Paradigm
     * Serverless vs. PaaS
       
-* [Architecture](./architecture/README.md) [
+* [Architecture](./architecture/README.md)
     * A Look Back
     * The Serverless Architectural Pattern
     * Event-Driven Architecture
