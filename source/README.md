@@ -6,13 +6,13 @@
     * Serverless In The Cloud Computing Paradigm
     * Serverless vs. PaaS
       
-* [Architecture](./architecture.md)
+* [Architecture](./architecture/README.md)
     * A Look Back
     * The Serverless Architectural Pattern
     * Event-Driven Architecture
     * Partitioning Logic
 
-* [Adoption](./adoption.md)
+* [Adoption](./adoption/README.md)
 
 * [Development](./dev/README.md)
     * [Culture](.dev/culture.md)
@@ -34,7 +34,7 @@
     * Monitoring
     * Logging/Auditing
 
-* [Security](./security.md)
+* [Security](./security/README.md)
     * Surface Area
     * Data Sharing 
     * Integrations with Auth services and providers
