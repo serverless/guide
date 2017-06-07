@@ -2,9 +2,11 @@
 
 *By the community, curated by [Serverless, Inc.](https://serverless.com/)*
 
+**TLDR;** [Read the guide](./source/README.md).
+
 ## About the Guide
 
-The open-source definitive guide on serverless architectures.
+The open-source definitive guide on serverless architectures, patterns, case studies and more. It is a completely community-driven effort. The goal is to provide guidance and best practices for all things serverless. 
 
 A general outline of what the guide will cover:
 
@@ -13,7 +15,6 @@ A general outline of what the guide will cover:
 * What are some of the misconceptions around serverless?
 * What are the benefits of serverless?
 * How is the adoption for serverless?
-* A look at the Serverless Framework
 * What is an event-driven architecture?
 * What are the security concerns around serverless?
 * The pathway to serverless development
@@ -22,7 +23,6 @@ A general outline of what the guide will cover:
 * Debugging and Monitoring serverless applications
 * A comparative look at the serverless providers
 * Case studies using serverless technologies
-* A look at the Serverless Platform
 
 Checkout the [full outline](./source/README.md) of the guide. 
 
@@ -35,7 +35,7 @@ Checkout the [full outline](./source/README.md) of the guide.
 - Is there an architectural pattern that you feel solves a specific usecase?
 - Do you have a success story that you would like to share?
 - Have you been successful with a specific vendor or platform?
-- Do you have an opinion/quote that you would like to add in a section?
+- Do you have an opinion/quote that you would like to share?
 
 **Then you have lots to share with the community.**
 
@@ -55,7 +55,7 @@ We would love to have your feedback. Or, if you have any questions, please let u
 
 ## Thanks in Advance
 
-The Serverless Guide is a community-driven effort, and we thank you for your contributions.
+The serverless guide is a community-driven effort, and we thank you for your contributions.
 
 Thanks, 
 
