@@ -1,18 +1,20 @@
 ## Security
 
 * How is security different in serverless world?
-* Access Control groups and permission sets
+* Are there new concerns and challenges?
+* Is relying on external auth providers, giving up control?
+* Managing data compliance and governamce around company security policies? 
 
 ### Surface Area
 
 * What is my surface area for attack?
-* What are some of the architectural considerations for security in the serverless world?
+* Security distributed across functions
+* Small execution time reduces exposure
 
 ### Data Sharing 
 
-* How is data shared? 
+* How is data shared in a stateless environment?
 * How is data isolated?
-* What are some of the architectural considerations for data sharing in the serverless world?
 
 ### Integrations
 
@@ -21,7 +23,7 @@
 
 ### Access Management
 
-* How should I handle IAM roles?
-* Role based access
+* Access Control groups and permission sets
+* Role based access (IAM roles)
 * What about other provider specific roles?
 * How does it translate to the Framework? Does it make it easier to manage?

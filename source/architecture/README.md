@@ -7,11 +7,11 @@
 
 ### The Serverless Architectural Pattern
 * Why do we need a new architectural pattern?
+* Functions as a Service (FaaS)
 * How do we get there?
   * Need for agile development lifecycles
   * Need for independent teams working in parallel
   * Focus on building than managing infrastructure
-  * Cooperative Development (sharing functions) 
 
 ### Event-Driven Architecture
 * Cooperative Development (sharing events) 

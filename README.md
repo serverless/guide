@@ -8,23 +8,20 @@
 
 The open-source definitive guide on serverless architectures, patterns, case studies and more. It is a completely community-driven effort. The goal is to provide guidance and best practices for all things serverless. 
 
-A general outline of what the guide will cover:
+What will be covered:
 
-* The evolution to serverless?
-* What is serverless?
-* What are some of the misconceptions around serverless?
-* What are the benefits of serverless?
-* How is the adoption for serverless?
-* What is an event-driven architecture?
-* What are the security concerns around serverless?
-* The pathway to serverless development
-* Deploying and Testing serverless applications
-* How is serverless changing DevOps?
-* Debugging and Monitoring serverless applications
-* A comparative look at the serverless providers
-* Case studies using serverless technologies
+* **Intro to serverless**: A little bit of history, evolution, misconceptions around serverless
+* **Benefits**: Get into why serverless, its benefits and charecteristics
+* **Adoption**: Insight into the adoption by enterprises and the tech communtiy in general
+* **Architecture**: Discussions around event-driven architecture, FaaS, evolving patterns and solutions
+* **Security**: Auth. services, access controls, surface areas for attack, data isolation...
+* **Development**: Rethinking around developing serverless applications and services
+* **Deployment & Testing**: Evolving toolchains and methodologies 
+* **Changing DevOps**: A look into the changing roles of DevOps teams and the mindshift
+* **New set of problems**: Concerns around debugging, logging, and monitoring, of serverless applications
+* **Providers**: A comparative look at the serverless providers out there
+* **Case studies**: Examples of real-life implementations of serverless technologies
 
-Checkout the [full outline](./source/README.md) of the guide. 
 
 ## How to Contribute to the Serverless Guide
 
@@ -34,7 +31,7 @@ Checkout the [full outline](./source/README.md) of the guide.
 - Do you work for a provider and see some inconsistencies in the content?
 - Is there an architectural pattern that you feel solves a specific usecase?
 - Do you have a success story that you would like to share?
-- Have you been successful with a specific vendor or platform?
+- Have you been successful with a specific vendor or a platform?
 - Do you have an opinion/quote that you would like to share?
 
 **Then you have lots to share with the community.**
@@ -43,7 +40,7 @@ We want your contributions to this guide. We would like you to bring in your exp
 
 ## Credits
 
-To recognize your contributions to the guide, your name will be mentioned on the page or section that you have contibuted content to.
+To recognize your contributions to the guide, your name will be mentioned on the page or section that you have contibuted content to. You will be added to the 
 
 ## Get in Touch
 

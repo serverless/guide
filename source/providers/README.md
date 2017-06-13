@@ -23,7 +23,7 @@ We will take a look at some popular AWS Lambda, Microsoft Azure Functions, IBM O
 
 ### The Players
 
-Some of the popular players in the horizon are:
+Some of the popular players are:
 
 #### AWS Lambda
 
