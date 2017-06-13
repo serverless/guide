@@ -1,8 +1,8 @@
 ### Deployment  
 
-* How is deploying serverless application different? Or what are the challenges?
+* How is deploying serverless services different? 
 * How to I continuously deploy?
-* How do I deploy to different stages?
+* How do I manage deployment to different staged environments?
 * Blue/Green Deployments
 * Rollbacks? 
 * Versioning support
