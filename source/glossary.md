@@ -1,3 +1,11 @@
+<!--
+title: Glossary
+menuText: Glossary
+menuOrder: 99
+description: The glossary section of the guide, listing the commonly used terms in serverless.
+layout: Doc
+-->
+
 # Serverless Terminology
 
 ## Serverless Platform

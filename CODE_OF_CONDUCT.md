@@ -1,3 +1,11 @@
+<!--
+title: Code of Conduct
+menuText: Code of Conduct
+menuOrder: 3
+description: Code of conduct guidelines for content in the guide
+layout: Doc
+-->
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge

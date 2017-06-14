@@ -1,3 +1,11 @@
+<!--
+title: Providers - Azure Functions
+menuText: Azure Functions
+menuOrder: 21
+description: Details about Azure Functions serverless platform.
+layout: Doc
+-->
+
 ## Microsoft Azure Functions
 
 Azure Functions is Microsoft's serverless compute offering, announced in spring of 2016.
@@ -56,3 +64,7 @@ The limitations are not really documented but gathering from user experiences, i
 * [Azure Functions](https://azure.microsoft.com/en-us/services/functions/)
 * [Azure Functions Source](https://github.com/Azure/Azure-Functions/)
 * [Azure Functions Documentation](https://docs.microsoft.com/en-us/azure/azure-functions/)
+
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***

@@ -1,28 +1,28 @@
-### Testing
-
 <!--
-Some guidance as to what needs to go in this section:
-
-1. Describe how testing strategies have changed.
-2. Effects on unit and integartion testing. New trends, problems etc.
-3. How has serverless changed CI/CD and effected automation in dev to deployment cycles?
-4. Any emerging tooling for testing?
-5. Showcase any best practices evolving around test-driven development
-
-Feel free to modify the sub-sections. 
-
-Add yourself as a contributer for the section(s) you contribute to. 
-
-<hr>
-
-**Section Credits:** <name> (<github handle>)
-
-<hr>
+title: Testing
+menuText: Testing
+menuOrder: 12
+description: Some best practices and strategies around testing serverless apps.
+layout: Doc
 -->
 
+### Testing
+
+***
+Some guidance as to what needs to go in this section:
+
+* Describe how testing strategies have changed
 * How is testing different in the serverless world?
 * How can I test locally?
-* Hoe can I make my testing cycle faster?
+* How can I make my dev-testing cycle faster?
+* Effects on unit and integration testing. New trends, problems etc.
+* How has serverless changed CI/CD and effected automation in dev to deployment cycles?
+* Any emerging tooling for testing?
+* Showcase any best practices evolving around test-driven development
+
+Feel free to add/modify the sub-sections. 
+***
+
 
 #### Testing Locally
 
@@ -47,6 +47,7 @@ Add yourself as a contributer for the section(s) you contribute to.
 #### Tooling
 
 * What are some of the tooling that helps testing serverless apps?
+* Chaos Testing as a Service - Gremlin
 
 #### Best Practices
 

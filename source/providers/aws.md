@@ -1,3 +1,11 @@
+<!--
+title: Providers - AWS Lambda
+menuText: AWS Lambda
+menuOrder: 20
+description: Details about AWS Lambda serverless platform.
+layout: Doc
+-->
+
 ## AWS Lambda
 
 AWS Lambda is Amazon's serverless compute service offering, announced in 2015. 
@@ -67,3 +75,7 @@ See [AWS Lambda pricing page](https://aws.amazon.com/lambda/pricing/) for detail
 * [AWS Lambda](https://aws.amazon.com/lambda/)
 * [Getting Started Guide](http://docs.aws.amazon.com/lambda/latest/dg/getting-started.html)
 * [AWS Lambda Documentation](https://aws.amazon.com/documentation/lambda/)
+
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***

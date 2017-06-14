@@ -1,3 +1,11 @@
+<!--
+title: Providers - Google Cloud Functions
+menuText: Google Cloud Functions
+menuOrder: 22
+description: Details about Google Cloud Functions serverless platform.
+layout: Doc
+-->
+
 ## Google Cloud Functions
 
 Cloud Functions is Google's serverless compute offering, with Beta announced in spring of 2017.
@@ -56,3 +64,7 @@ Google Cloud Functions define quota limits in three different areas:
 * [Google Cloud Functions](https://cloud.google.com/functions/)
 * [Quickstart](https://cloud.google.com/functions/docs/quickstart)
 * [Google Cloud Functions Documentation](https://cloud.google.com/functions/docs/)
+
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***

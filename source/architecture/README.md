@@ -1,3 +1,11 @@
+<!--
+title: Architecture
+menuText: Architecture
+menuOrder: 6
+description: A section about serverless architectures, patterns and solutions.
+layout: Doc
+-->
+
 ## Architecture
 
 ### A Look Back
