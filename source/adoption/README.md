@@ -8,15 +8,15 @@ layout: Doc
 
 ### Adoption
 
-*[Describe the adoption of serverless technology in the community and in the enterprises]*
+***
+Some guidance as to what needs to go in this section:
 
-* Is it for me?
-* It is just a hype, so I will wait (Enterprises)
+* Describe the adoption of serverless technology in the enterprises
+* Is it for me? If it is just a hype, I will wait (Enterprises)
 * What is Gartner saying?
 * Who are the big players that see the value?
 
-#### Serverless in Enterprises
+***
 
-#### Use
 
 
