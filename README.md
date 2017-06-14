@@ -1,8 +1,8 @@
 <!--
-title: About the Guide
-menuText: About
+title: Read Me
+menuText: Read Me
 menuOrder: 1
-description: About the guide with sections for contribution guidelines, credits, contact us, and license. 
+description: General readme section that covers contribution guidelines, credits, contact info., and license. 
 layout: Doc
 -->
 
