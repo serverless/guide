@@ -1,3 +1,11 @@
+<!--
+title: About the Guide
+menuText: About
+menuOrder: 1
+description: About the guide with sections for contribution guidelines, credits, contact us, and license. 
+layout: Doc
+-->
+
 # Serverless Guide
 
 *By the community, curated by [Serverless, Inc.](https://serverless.com/)*

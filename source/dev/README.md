@@ -1,3 +1,11 @@
+<!--
+title: Development
+menuText: Development
+menuOrder: 8
+description: An overview of development trends, changing mindsets, using serverless technologies.
+layout: Doc
+-->
+
 # Development
 
 Bringing a product to life usually starts with an idea, which transforms into a code spike. A short sprint that manifests the core idea into code. Most developers want to share the idea and deploy the code as soon as they can. The excitement is usually curbed by the decisions that follow. The decisions around infrastructure, scalability, costs... That is usually a big chasm to cross.
@@ -63,8 +71,6 @@ The serverless style of computing is opening up the gates to a distributed, even
 
 The possibilities are endless, and we are on the threshold of unleashing the power of serverless computing.
 
-<hr>
-
+***
 **Credits:** Rupak Ganguly (@rupakg)
-
-<hr>
+***

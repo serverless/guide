@@ -1,3 +1,11 @@
+<!--
+title: Providers - IBM OpenWhisk
+menuText: IBM OpenWhisk
+menuOrder: 22
+description: Details about IBM OpenWhisk serverless platform.
+layout: Doc
+-->
+
 ## IBM OpenWhisk
 
 OpenWhisk is IBM's serverless copute offering, with experimental service announced in early 2016.
@@ -42,3 +50,7 @@ The open-source offering is available for free. The exact prices for the final o
 * [IBM OpenWhisk](https://www.ibm.com/cloud-computing/bluemix/openwhisk)
 * [Apache OpenWhisk](http://openwhisk.org/)
 * [Getting Started](https://console.ng.bluemix.net/docs/openwhisk/index.html#getting-started-with-openwhisk)
+
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***

@@ -1,8 +1,12 @@
+<!--
+title: Providers - Azure Functions
+menuText: Azure Functions
+menuOrder: 19
+description: Details about Azure Functions serverless platform.
+layout: Doc
+-->
+
 ## Providers
-
-*[For each provider highlight their product, advantages, limitations, use cases, etc.]*
-
-### Introduction
 
 The serverless technology has raised a lot of eyebrows in the community in the last few years and the few big players have stepped up to release their own serverless compute infrastructure platforms. 
 
@@ -57,11 +61,6 @@ OpenWhisk is IBM's serverless copute offering, with experimental service announc
 
 [More details](./openwhisk.md)...
 
-#### Webtask.io
-
-
-[More details](./webtask.md)...
-
-#### Iron.io
-
-[More details](./iron.md)...
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***

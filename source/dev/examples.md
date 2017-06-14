@@ -1,3 +1,17 @@
+<!--
+title: Examples
+menuText: Examples
+menuOrder: 14
+description: Some examples of serverless services and apps.
+layout: Doc
+-->
+
 ### Examples
 
-*[link, description, and (tags?) for each example from the examples repo (Goal: provide concrete use cases and example code)]*
+***
+Some guidance as to what needs to go in this section:
+
+* Provide concrete use cases and example code
+* List examples with link, and description from the examples repo
+
+***

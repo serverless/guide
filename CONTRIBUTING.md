@@ -1,3 +1,11 @@
+<!--
+title: Contributing to the guide
+menuText: Contribute
+menuOrder: 2
+description: Contribution guidelines for potential authors 
+layout: Doc
+-->
+
 ## Contribute
 
 It is very easy to contribute:

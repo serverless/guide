@@ -1,3 +1,11 @@
+<!--
+title: Table of Contents
+menuText: Table of Contents
+menuOrder: 4
+description: Table of contents for the guide
+layout: Doc
+-->
+
 ## Contents
 
 * [Introduction](./introduction.md)
@@ -42,21 +50,11 @@
     * Access Management
 
 * [Providers](./providers/README.md)
-    * [Introduction](./providers/README.md#introduction)
-    * [A Comparative Look](./providers/README.md#a-comparative-look)
-    * The Players
-      * [AWS Lambda](./providers/aws.md)
-      * [Azure Functions](./providers/azure.md)
-      * [Google Cloud Functions](./providers/gcf.md)
-      * [IBM OpenWhisk](./providers/openwhisk.md)
+    * [AWS Lambda](./providers/aws.md)
+    * [Azure Functions](./providers/azure.md)
+    * [Google Cloud Functions](./providers/gcf.md)
+    * [IBM OpenWhisk](./providers/openwhisk.md)
 
 * [Case Studies](./case_studies/README.md)
-    * Backends for Web, Mobile & IoT
-    * Data Processing Pipelines
-    * Webhooks
-    * Chatbots
-    * All Event-Driven Workflows
-    * Devops/Tooling Automation
-    * CRON Jobs
 
 * [Glossary](./glossary.md)

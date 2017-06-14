@@ -1,23 +1,26 @@
+<!--
+title: Operations
+menuText: Operations
+menuOrder: 16
+description: A section describing the effects of serverless on operations and DevOps teams.
+layout: Doc
+-->
+
 ## Operations
 
-<!--
+***
 Some guidance as to what needs to go in this section:
 
-1. Tell the story about the shift in the role of DevOps.
-2. How serverless is changing our look beyond infrastructure.
-3. Some new problems emerging for DevOps teams.
-4. How is it changing the ways we deploy applications?
+* Tell the story about the shift in the role of DevOps
+* It is not NoOps, but DifferentOps
+* How serverless is changing our look beyond infrastructure
+* Some new problems emerging for DevOps teams
+* How is it changing the way we manage applications?
+* Shift from mundane work of managing infrastructure to taking care of business
+* More time and resources to monitor health, load, bottlenecks of applications
 
-Feel free to modify the sub-sections. 
-
-Add yourself as a contributer for the section(s) you contribute to. 
-
-<hr>
-
-**Section Credits:** <name> (<github handle>)
-
-<hr>
--->
+Feel free to add/modify the sub-sections. 
+***
 
 ### Misconceptions about NoOps
 
