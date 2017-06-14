@@ -16,7 +16,6 @@ Some guidance as to what needs to go in this section:
 * How can I test locally?
 * How can I make my dev-testing cycle faster?
 * Effects on unit and integration testing. New trends, problems etc.
-* How has serverless changed CI/CD and effected automation in dev to deployment cycles?
 * Any emerging tooling for testing?
 * Showcase any best practices evolving around test-driven development
 
