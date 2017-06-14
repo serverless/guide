@@ -39,11 +39,6 @@ Feel free to add/modify the sub-sections.
 * What are the challenges in writing Integration tests?
 * How do we test end-to-end?
 
-#### Continous Integration/Development
-
-* How do I do continuous integration? 
-* Example of a CI/CD workflow
-
 #### Tooling
 
 * What are some of the tooling that helps testing serverless apps?
