@@ -10,22 +10,20 @@ layout: Doc
 
 It is very easy to contribute:
 
+1. Fork the guide [repo](https://github.com/serverless/guide).
+2. Pick a page/section and commit your changes.
+3. Open a [PR](https://github.com/serverless/guide/pull/8) 
+
+**Tips**: 
 - Check the [project page](https://github.com/serverless/guide/projects/1) to see who is working on what pages/sections of the guide.
-- Pick a page/section of the guide to contribute.
-- Open an issue describing the page/section that you will be working on and assign the issue to yourself. See an example of an [issue](https://github.com/serverless/guide/issues/9).
-- Make sure you have read the [Guidelines](#guidelines) section.
-- Write to your heart's content and proof read it. 
-- Commit your changes to a branch and open a PR. See an example of a [PR](https://github.com/serverless/guide/pull/8).
-
-It is that simple!!!
-
-A very lean and simple review process will ensure all is good, and then the PRs will be merged.
+- (Optionally) Open an issue describing the page/section that you will be working on and assign the issue to yourself. See an example of an [issue](https://github.com/serverless/guide/issues/9).
+- Read the [Guidelines](#guidelines) section.
 
 ## Guidelines
 
 Since we as a community are writing and contributing to different sections of the guide, it will need a lot of love, a bit of guidance and discipline. Here are a few things to the  make the content of high-quality, coherent and consistent.
 
-**Vocabulary:** Use the [serverless terminologies](./terminology.md) guide to keep the verbiage consistent.
+**Vocabulary:** Consult the [glossary](/guide/source/glossary.md) to keep the terminology consistent.
 
 **Voice**: Write in second-person, active voice so that the content is concise, to the point yet personable.
 

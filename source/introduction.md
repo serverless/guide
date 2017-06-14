@@ -51,6 +51,7 @@ The unit of consumption and billing, is in milliseconds, and is based on the com
 * Cloud Based
 * Third Party Services
 * Thicker Clients
+* Third Party Services
 
 #### Driving Factors/Benefits
 * Lowest Total Cost of Ownership
