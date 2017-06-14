@@ -17,12 +17,12 @@ We will take a look at some popular AWS Lambda, Microsoft Azure Functions, IBM O
 ### A Comparative Look
 
 
-|      Providers | AWS Lambda | Azure Functions | Google CloudFunctions | IBM OpenWhisk | Webtask.io |
-|----------------|------------|-----------------|-----------------------|---------------|------------|
-| Features       |            |                 |                       |               |            |
-|                |            |                 |                       |               |            |
-|                |            |                 |                       |               |            |
-|                |            |                 |                       |               |            |
+|      Providers | AWS Lambda       | Azure Functions    | Google CloudFunctions | IBM OpenWhisk    |
+|----------------|------------------|--------------------|-----------------------|------------------|
+| Features       |                  |                    |                       |                  |
+|                |                  |                    |                       |                  |
+|                |                  |                    |                       |                  |
+|                |                  |                    |                       |                  |
 
 
 ### The Players
