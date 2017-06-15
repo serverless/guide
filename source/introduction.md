@@ -26,7 +26,7 @@ Serverless computing is *not* here to replace every other computing platform out
 
 ### What Is Serverless?
 
-Serverless is a new architectural pattern that runs backend logic embedded in functions, inside compute containers, that are stateless, triggered by events and ephemeral in nature. It is a code-centric approach to application development. Each function, where the code lives is atomic and handles a single responsibility. Functions can be grouped together into services. 
+Serverless aka Function as a Service (FaaS), is an architectural pattern that runs backend logic embedded in functions, inside compute containers, that are stateless, triggered by events and ephemeral in nature. It is a code-centric approach to application development. Each function, where the code lives is atomic and handles a single responsibility. Functions can be grouped together into services. 
 
 Events originating inside or outside of your application/service can trigger your functions. Your functions can consume events, or trigger other events. This allows your applications to react to events in an asynchronous manner. It allows for a serverless application platform that promotes production, detection, consumption and reaction to events.
 
@@ -38,7 +38,11 @@ The unit of consumption and billing, is in milliseconds, and is based on the com
 ***
 
 #### Misconceptions
-* Misconceptions around serverless
+
+The name 'serverless' has been a point of confusion and discussion ever since it was coined. Serverless doesn't mean there are no more servers, just ones that you no longer have to think about. It takes away the burden from the developers and puts it on the provider. The provider platform manages the fleet of 'servers' or the underlying infrastructure, taking care of scalability and uptime behind the scenes. 
+
+Another misconception around serverless, is the notion of no DevOps. That is so not true.
+
 * Debate around NoOps
 
 #### Characteristics
