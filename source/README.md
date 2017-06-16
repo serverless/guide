@@ -23,31 +23,19 @@ layout: Doc
 * [Adoption](./adoption/README.md)
 
 * [Development](./dev/README.md)
-    * [Culture](./dev/culture.md)
-    * [Pathway to Serverless Development](./dev/pathway_to_sls.md)
-    * [Project Structure](./dev/project_structure.md)
-    * [Deployment](./dev/deployment.md)
-    * [Testing](./dev/testing.md)
-    * [Debugging](./dev/debugging.md)
-    * [Examples](./dev/examples.md)
+    * Culture
+    * Pathway to Serverless Development
+    * Project Structure
+    * Deployment
+    * Testing
+    * Debugging
+    * Examples
 
-* [Toolsets](./toolsets/README.md) 
+* Toolsets
 
 * [Operations](./ops/README.md)
-    * Misconceptions about NoOps
-    * Zero Administration    
-    * Managing Stages & Environments
-    * Performance Management
-    * Distributed Tracing
-    * Troubleshooting
-    * Monitoring
-    * Logging/Auditing
 
 * [Security](./security/README.md)
-    * Surface Area
-    * Data Sharing 
-    * Integrations with Auth services and providers
-    * Access Management
 
 * [Providers](./providers/README.md)
     * [AWS Lambda](./providers/aws.md)
