@@ -48,7 +48,7 @@ We want your contributions to this guide. We would like you to bring in your exp
 
 ## Credits
 
-To recognize your contributions to the guide, your name will be mentioned on the page or section that you have contibuted content to. You will be added to the 
+To recognize your contributions to the guide, we encourage you to add your name to the Credits section on a page. We will add you to the 'Guide Authors' team on our Github org. You also get our serverless badge [![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com) for your Github profile.
 
 ## Get in Touch
 
