@@ -8,14 +8,14 @@ layout: Doc
 
 ## Contribute
 
-It is very easy to contribute:
+To contribute:
 
 1. Fork the guide [repo](https://github.com/serverless/guide).
 2. Pick a page/section and commit your changes.
 3. Open a [PR](https://github.com/serverless/guide/pull/8) 
 
 **Tips**: 
-- Check the [project page](https://github.com/serverless/guide/projects/1) to see who is working on what pages/sections of the guide.
+- Check the [project page](https://github.com/serverless/guide/projects/1) for issues. Assign yourself to an issue, if you start working on one.
 - (Optionally) Open an issue describing the page/section that you will be working on and assign the issue to yourself. See an example of an [issue](https://github.com/serverless/guide/issues/9).
 - Read the [Guidelines](#guidelines) section.
 

@@ -16,9 +16,6 @@ From an application development perspective, serverless computing makes function
 
 Serverless computing is *not* here to replace every other computing platform out there. It is here to augment them. It will help us re-think how we build applications for tomorrow. It is a disruptive technology that will change how we code.
 
-***
-**Section Credits:** Rupak Ganguly (@rupakg)
-***
 
 ### The Evolution
 * How did we get here?
@@ -33,44 +30,13 @@ Events originating inside or outside of your application/service can trigger you
 The unit of consumption and billing, is in milliseconds, and is based on the compute time and resources that were used by your functions. There is no idle compute time. *There is no paying for idle time.* Load on your functions are transparently handled at the compute provider level, and your functions are auto-scaled to meet the needs of the application. The focus is changed from being infrastructure-centric to being code-centric.
  
 
+
 ***
-**Section Credits:** Rupak Ganguly (@rupakg)
+To contribute to this section of the guide, please see suggested content breakup in [Issue #31](https://github.com/serverless/guide/issues/31)
 ***
 
-#### Misconceptions
-
-The name 'serverless' has been a point of confusion and discussion ever since it was coined. Serverless doesn't mean there are no more servers, just ones that you no longer have to think about. It takes away the burden from the developers and puts it on the provider. The provider platform manages the fleet of 'servers' or the underlying infrastructure, taking care of scalability and uptime behind the scenes. 
-
-Another misconception around serverless, is the notion of no DevOps. That is so not true.
-
-* Debate around NoOps
-
-#### Characteristics
-* Execute Code On Demand
-* Zero-Administration
-* Microservices
-* Event-Driven
-* Pay-Per-Execution
-* Stateless
-* Cloud Based
-* Third Party Services
-* Thicker Clients
-* Third Party Services
-
-#### Driving Factors/Benefits
-* Lowest Total Cost of Ownership
-* Focus on Business Problems
-* Build More, Faster
-* No Underutilization
-* Agility
-* Team Autonomy 
-
-
-### Serverless In The Cloud Computing Paradigm
-
-### Serverless vs. PaaS
-
-
-
+***
+**Credits:** Rupak Ganguly (@rupakg)
+***
 
 

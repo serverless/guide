@@ -4,6 +4,7 @@ menuText: Case Studies
 menuOrder: 22
 description: Real-life case studies from enterprises that have been successful running serverless in production.
 layout: Doc
+publish: false
 -->
 
 ## Case Studies
@@ -13,18 +14,8 @@ AWS Lambda and serverless technologies in general, has led to a lot of excitemen
 <!--
 1. See the template (CASE_STUDY_TEMPLATE.md) for guidance around structure for your case study.
 2. Create a new markdown file in the case_studies folder, and name it <title_company.md>. Keep the filename short.
+3. Create/Add the case study to a list here on the page.
 -->
 
-***
-Some examples of use cases that could be covered:
-
-* Backends for Web, Mobile & IoT
-* Data Processing Pipelines
-* Webhooks
-* Chatbots
-* All Event-Driven Workflows
-* Devops/Tooling Automation
-* CRON Jobs
-
-***
+To contribute to this section of the guide, please see suggested content breakup in [Issue #29](https://github.com/serverless/guide/issues/29)
 
