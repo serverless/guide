@@ -25,7 +25,7 @@ The platform includes the following products and services:
 
 ### Language Support
 
-Write functions using C#, F#, Node.js, Python, PHP, batch, bash, or any executable.
+Supports C#, F#, Node.js, Python, PHP, batch, bash, or any executable.
 
 ### Security
 
@@ -33,9 +33,7 @@ Protect HTTP-triggered functions with OAuth providers such as Azure Active Direc
 
 ### Tooling
 
-Azure Portal, Azure Powershell and Azure CLI
-
-[Azure SDK](https://azure.microsoft.com/downloads/)
+[Azure Portal](https://portal.azure.com/), [Azure Powershell](https://docs.microsoft.com/en-us/powershell/azure/overview), [Azure CLI](https://azure.github.io/projects/clis/), and [Azure SDK](https://azure.microsoft.com/downloads/)
 
 Supports coding functions directly in the portal, or through Visual Studio Team Services or others IDEs like Xcode, Eclipse, and IntelliJ IDEA. Visual Studio supports all three deployment processes (FTP, Git, and Web Deploy), while other IDEs can deploy to App Service if they have FTP or Git integration. See [deployment processes overview](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-deploy#overview) for details.
 
@@ -43,9 +41,15 @@ Supports coding functions directly in the portal, or through Visual Studio Team 
 
 Functions integrates with [Azure Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview), the Azure APM service. It includes metrics, traces, exception tracking, dependencies and user data. Despite the serverless abstraction, App Insights lets users see server-level metrics down into individual VMs such as the CPU usage. See [monitoring overview](https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-monitor) for details.
 
+[Application Insights Analytics](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-analytics) gives detailed information about diagnostic data for an application.
+
+[Azure Audit Logs](https://azure.microsoft.com/en-us/documentation/articles/insights-debugging-with-events/) is a data source that provides a wealth of information on the operations on your Azure resources. The most important data within Azure Audit Logs is the operational logs from all your resources.
+
+Alerts are available across different services, including, Application Insights, Log Analytics, and Azure Monitor.
+
 ### Debugging & Diagnostics
 
-The [Azure Functions CLI](https://www.npmjs.com/package/azure-functions-cli) provides local debugging support. But, since Azure Functions is built on top of Azure App Service, remote debugging support is built-in.
+The [Azure Functions CLI](https://www.npmjs.com/package/azure-functions-cli) provides local debugging support. But, since Azure Functions is built on top of [Azure App Service](https://azure.microsoft.com/en-us/services/app-service/), remote debugging support is built-in.
 
 With the help of a few tools and components like Visual Studio, [Visual Studio Tools for Azure Functions](https://blogs.msdn.microsoft.com/webdev/2016/12/01/visual-studio-tools-for-azure-functions/) and [Cloud Explorer extension](https://marketplace.visualstudio.com/items?itemName=MicrosoftCloudExplorer.CloudExplorerforVisualStudio2015), it is possible to set breakpoints and step through code via the debugger. 
 **Note**: Although these tooling experience is currently in preview.

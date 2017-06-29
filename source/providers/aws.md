@@ -36,7 +36,7 @@ Supports Java, Node.js, C#, and Python code.
 
 ### Security
 
-Secure access to other AWS services via built-in AWS SDK and integration with AWS IAM. The code is run within a VPC by default, so the code is isolated. Support for custom VPC, security groups and network access control lists as well.
+Secure access to other AWS services via built-in AWS SDK and integration with [AWS IAM](https://aws.amazon.com/iam/). The code is run within a VPC by default, so the code is isolated. Support for custom VPC, security groups and network access control lists as well.
 
 ### Tooling
 
@@ -56,7 +56,7 @@ Code can be instrumented with logging statements, and the logs are automatically
 
 All the data about metrics and logs can be viewed from the CloudWatch console.
 
-CloudWatch also provides alerting capabilities to create alarms and receive notifications of API activity that are captured by [CloudTrail](http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-user-guide.html).
+CloudWatch also provides alerting capabilities to create alarms and receive notifications of API activity that are captured by [AWS CloudTrail](https://aws.amazon.com/cloudtrail/).
 
 ### Debugging & Diagnostics
 

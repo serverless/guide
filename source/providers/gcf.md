@@ -18,7 +18,7 @@ The Google serverless platform consists of the compute service called Cloud Func
 * Cloud Pub/Sub - real-time messaging service
 * Stackdriver Logging - log management and analysis
 
-There is a full list of [services and event providers](https://cloud.google.com/functions/docs/concepts/services, that are supported.
+There is a full list of [services and event providers](https://cloud.google.com/functions/docs/concepts/services), that are supported.
 
 ### How It Works
 
@@ -26,7 +26,7 @@ There is a full list of [services and event providers](https://cloud.google.com/
 
 ### Language Support
 
-Supports only Javascript.
+Supports Node.js.
 
 ### Security
 
@@ -34,12 +34,15 @@ Google Cloud Functions provide the ability to provide access control to create a
 
 ### Tooling
 
+[gcloud CLI](https://cloud.google.com/sdk/gcloud/reference/beta/functions/) (beta) for functions.
 
 ### Monitoring, Logging & Alerting
 
 Logs emitted from Cloud Functions are automatically written to [Stackdriver Logging](https://cloud.google.com/logging/). Stackdriver Logging allows storage, search, analysis, monitoring, and alerting of log data and events from various sources.
 
 [Stackdriver Monitoring](https://cloud.google.com/monitoring/) provides visibility into the performance, uptime, and overall health of cloud-powered applications. It collects metrics, events, and metadata from various sources, ingests that data and generates insights via dashboards, charts, and alerts. It allows setting alerts on logs events based on user-defined log based metrics.
+
+[Cloud Audit Logging](https://cloud.google.com/logging/docs/audit/) maintains two audit logs for each project and organization: Admin Activity and Data Access.
 
 ### Debugging & Diagnostics
 
