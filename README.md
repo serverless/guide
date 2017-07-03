@@ -19,7 +19,7 @@ The open-source definitive guide on serverless architectures, patterns, case stu
 What will be covered:
 
 * **Intro to serverless**: A little bit of history, evolution, misconceptions around serverless
-* **Benefits**: Get into why serverless, its benefits and charecteristics
+* **Benefits**: Get into why serverless, its benefits and characteristics
 * **Adoption**: Insight into the adoption by enterprises and the tech communtiy in general
 * **Architecture**: Discussions around event-driven architecture, FaaS, evolving patterns and solutions
 * **Security**: Auth. services, access controls, surface areas for attack, data isolation...
