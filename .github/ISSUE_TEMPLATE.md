@@ -12,6 +12,8 @@
 
 **Page/Section:**
 
+**Contributing Author:** <full name> (comapany) 
+
 **Details:** 
 
 
