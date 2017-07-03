@@ -12,7 +12,7 @@
 
 **Page/Section:**
 
-**Contributing Author:** <full name> (comapany) 
+**Contributing Author:** <full name> (company) 
 
 **Details:** 
 
