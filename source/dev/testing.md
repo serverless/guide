@@ -7,13 +7,13 @@ layout: Doc
 publish: false
 -->
 
-## Testing
+### Testing
 
-### Introduction
+#### Introduction
 
 [Brief intro into unit testing and integration testing]
 
-### Unit Testing
+#### Unit Testing
 
 Lambda functions are ideally small — a few hundred lines of code at the most — taken up mostly by error handling; the happy path should be very short, or at least relatively straightforward. Thus, introducing abstractions can create a lot of code bloat. 
 
@@ -81,7 +81,7 @@ Why abstracting out service invocations is not optimal?
 How can mocking / stubbing calls help?
 Any challenges? -->
 
-### Integration Testing
+#### Integration Testing
 
 In serverless architectures, control over many — or even most — components is given up. This is generally true of using SaaS products, but with a fully serverless system, the number of points where the developer has full control is further reduced. On AWS, user code is limited to Lambda functions, API Gateway mappings, and IoT rules, which gives no ability to, for example, induce a premature shutdown of the underlying EC2 instance handling an API Gateway connection, or cause SNS to fail when invoked by an event on S3. While the compute components of serverless systems are generally stateless (a good practice), this doesn’t mean that, in a degraded system, they will meet performance requirements (e.g., latency, data loss, management of distributed transactions, etc.).
 
