@@ -32,20 +32,24 @@ In the last few years, AWS Lambda made the serverless computing platform accessi
 
 ### What Is Serverless?
 
-Serverless a.k.a Function as a Service (FaaS), is an architectural pattern that runs backend logic embedded in functions, inside compute containers, that are stateless, triggered by events and ephemeral in nature. It is a code-centric approach to application development. Each function, where the code lives is atomic and handles a single responsibility. Functions can be grouped together into services. The serverless architecture promotes the use of third-party services a.k.a Backend-as-a-Service (BaaS) for authentication, data access etc.
+Just like wireless internet has wires somewhere, serverless architectures still have servers somewhere. What makes something serverless is, that as a developer you don’t have to worry or think about those servers. You can just focus on code.
 
-Events originating inside or outside of your application/service can trigger your functions. Your functions can consume events, or trigger other events. This allows your applications to react to events in an asynchronous manner. It allows for a serverless application platform that promotes production, detection, consumption and reaction to events.
+There are 4 core tenets you should know about:
 
-The unit of consumption and billing, is in milliseconds, and is based on the compute time and resources that were used by your functions. There is no idle compute time. *There is no paying for idle time.* Load on your functions are transparently handled at the compute provider level, and your functions are auto-scaled to meet the needs of the application. The focus is changed from being infrastructure-centric to being code-centric.
- 
+1. Zero Administration
+This is the most exciting thing about serverless. Whereas previous abstractions like VMs and containers still shared a lot of the same configuration and administration properties of servers, serverless is a completely different experience. When you're ready to deploy code, you don't have to provision anything beforehand, or manage anything afterward. There is no concept of a fleet, an instance, or even an operating system. Everything runs in the cloud and the provider manages scaling for you.
 
+1. Pay-per-execution
+This is what typically incentivizes developers to try serverless for the first time. It’s alluring to have complete resource utilization without paying a cent for idle time. This tenet alone results in over 90% cost-savings over a cloud VM and immeasurable developer satisfaction in knowing that you never have to pay for resources that you don’t use.
+
+1. Function as unit of deployment
+Serverless architectures are composed of very small, independent bits of code (functions) that are loosely coupled and collaborative—also known as a microservice architecture. The main advantage? Pieces of the system are contained. They can be developed and deployed independently. The result is fewer blockers and far greater developer autonomy and productivity.
+
+1. Event-Driven
+This aspect of serverless is the most under-the-radar right now, but is shaping up to be the most important in the long-term. Serverless functions are stateless, and essentially dormant, until they have an event to react to. The event is what brings them to life and provides them with the data/context to do their job. Event-driven architectures are nothing new, but the rise of serverless compute has renewed interest in them because serverless architectures are by definition event-driven.
 
 ***
-To contribute to this section of the guide, please see suggested content breakup in [Issue #31](https://github.com/serverless/guide/issues/31)
-***
-
-***
-**Credits:** Rupak Ganguly (@rupakg)
+**Credits:** Rupak Ganguly (@rupakg), Nick Gottlieb (@worldsoup)
 ***
 
 
