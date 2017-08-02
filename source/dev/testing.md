@@ -11,17 +11,18 @@ publish: false
 
 #### Introduction
 
-[Brief intro into unit testing and integration testing]
+When thinking about testing serverless functions, it's useful to think in terms of unit tests that are performed against a function in isolation, and integration tests that test the system as a whole.
+Unit tests can be performed locally because they just require the code for the function, but integration tests involving SaaS can really only be performed on the deployed system (some platforms may offer local executions as part of a deployed system, which mitigates this somewhat).
 
 #### Unit Testing
 
-Lambda functions are ideally small — a few hundred lines of code at the most — taken up mostly by error handling; the happy path should be very short, or at least relatively straightforward. Thus, introducing abstractions can create a lot of code bloat. 
+Lambda functions are ideally small—a few hundred lines of code at the most—taken up mostly by error handling; the happy path should be very short, or at least relatively straightforward. Thus, introducing abstractions can create a lot of code bloat. So what should serverless function unit tests look like? A serverless function, by definition, can only have side effects by using other services. Unlike traditional (read: serverfull) systems, it's less necessary to abstract out the service invocations. There are two reasons for this:
 
-When thinking about testing, it's useful with serverless functions to think in terms of unit tests that are performed against a function in isolation, and integration tests that test the system as a whole. Unit tests can be performed locally, because they just require the code for the function, but integration tests involving SaaS can really only be performed on the deployed system (some platforms may offer local executions as part of a deployed system, which mitigates this somewhat). So what should serverless function unit tests look like? For an example, we'll use the AWS Python SDK, [boto3](https://boto3.readthedocs.io/en/latest/).
+* Abstraction isn’t worth it. Serverless architectures come bundled with a level of vendor lock-in; a lowest-common denominator interface that can talk to both AWS DynamoDB and Google Cloud Bigtable is going to have limited functionality, and basically no opportunities to take advantage of either service’s optimization techniques.
+* Abstraction isn't necessary for testing. If anything, it creates extra work! The AWS SDK provides mechanisms for stubbing out SDK calls. Using recorded responses as a mocking technique, the function can be tricked into believing it is making the live call.
+ * There are options for the JavaScript SDK in [aws-sdk-mock](https://www.npmjs.com/package/aws-sdk-mock) and [mock-aws](https://www.npmjs.com/package/mock-aws), but if you code in Python, you can use [placebo](https://github.com/garnaat/placebo) (though there is also [moto](https://github.com/spulec/moto)). We'll use the AWS Python SDK, boto3 in our examples. With placebo, you passively record SDK calls on a real session, and then for testing you can instruct boto3 to use the recorded response instead of actually making the call.
 
-A serverless function, by definition, can only have side effects by using other services. Unlike in a traditional, non-serverless system, it’s less necessary to abstract out the service invocations, for two reasons. One, in a serverless/SaaS-based system, abstraction isn’t worth it for getting around the level of vendor lock-in that comes with these designs; a lowest-common denominator interface that can talk to both, say, AWS DynamoDB and Google Cloud Bigtable is going to have limited functionality with basically no opportunities to take advantage of either service’s optimization techniques. Two, abstracting the service invocations for the purposes of testing is unnecessary, and, in fact, creates extra work! The AWS SDK provides mechanisms for stubbing out SDK calls. There are options for the JavaScript SDK in [aws-sdk-mock](https://www.npmjs.com/package/aws-sdk-mock) and [mock-aws](https://www.npmjs.com/package/mock-aws), but if you code in Python, you can use [placebo](https://github.com/garnaat/placebo) (though there is also [moto](https://github.com/spulec/moto)). With placebo, you passively record SDK calls on a real session, and then for testing you can instruct boto3 to use the recorded response instead of actually making the call. So your function can happily proceed to directly use the SDK (without abstractions), and it’ll never know that it’s inside a testing environment, not actually talking to the outside world.
-
-There’s one caveat here: the way boto3 works, to set up the intercept, you have to call a method on the session that is being used by a given client or resource, and there is no hook provided at the package level to inject this into the Session constructor. An unrelated detail: boto3 sessions, clients, and resources are relatively expensive to create. For these two reasons, you can use one minor abstraction across your functions: create a class that provides factory methods for sessions, clients, and resources. This class should provide a hook for injecting placebo into the session, and also cache the sessions, clients, and resources, which will then reduce the overhead across successive function invocations. It could look more or less like this:
+Create an abstraction (`Boto3Wrapper` class) that provides factory methods for sessions, clients, and resources will enable caching, which will then reduce the overhead across successive function invocations. For example:
 
 ```
 # in package boto3wrapper
@@ -74,7 +75,7 @@ class MyTest(unittest2.TestCase):
         # placebo injected on its sessions
 ```
 
-This approach for functions to be written as concisely as possible, focusing on business logic, and letting abstraction take place at the architecture level, in the separation of code and APIs between functions.
+This approach allows for functions to be written as concisely as possible, focusing on business logic, and letting abstraction take place at the architecture level, in the separation of code and APIs between functions.
 
 <!-- How unit testing in serverless needs a new perspective?
 Why abstracting out service invocations is not optimal?
@@ -83,7 +84,7 @@ Any challenges? -->
 
 #### Integration Testing
 
-In serverless architectures, control over many — or even most — components is given up. This is generally true of using SaaS products, but with a fully serverless system, the number of points where the developer has full control is further reduced. On AWS, user code is limited to Lambda functions, API Gateway mappings, and IoT rules, which gives no ability to, for example, induce a premature shutdown of the underlying EC2 instance handling an API Gateway connection, or cause SNS to fail when invoked by an event on S3. While the compute components of serverless systems are generally stateless (a good practice), this doesn’t mean that, in a degraded system, they will meet performance requirements (e.g., latency, data loss, management of distributed transactions, etc.).
+In serverless architectures, control over many—or even most—components is given up. This is generally true of using SaaS products, but with a fully serverless system, the number of points where the developer has full control is further reduced. On AWS, user code is limited to Lambda functions, API Gateway mappings, and IoT rules, which gives no ability to, for example, induce a premature shutdown of the underlying EC2 instance handling an API Gateway connection, or cause SNS to fail when invoked by an event on S3. While the compute components of serverless systems are generally stateless (a good practice), this doesn’t mean that, in a degraded system, they will meet performance requirements (e.g., latency, data loss, management of distributed transactions, etc.).
 
 While unit testing of serverless function code is fairly straightforward, as we've seen above, this does not suffice for verifying that a full system is production-ready; integration testing is required. However, integration testing for serverless architectures presents a problem. For the purpose of this section, we will assume the system uses solely AWS services. How can we test the situation where DynamoDB has less-than-perfect reliability? Does our system degrade gracefully? Does our logging and monitoring system adequately inform us of the problems?
 
