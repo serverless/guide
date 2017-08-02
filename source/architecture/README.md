@@ -9,7 +9,7 @@ publish: false
 
 ## Architecture
 
-Much like dinosaurs, software architectural patterns emerge, evolve, go extinct. As newer technologies get introduced, we move to keep pace. Here, we compare and contrast some of the characteristics and benefits of each iteration throughout architecture history.
+Software architectural patterns follow a life cycle. They emerge, evolve, go extinct. Let's take a few steps back and trace the flipping iterations in the history of architectures.
 
 ### The Monolithic Architecture
 
