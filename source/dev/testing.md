@@ -4,12 +4,10 @@ menuText: Testing
 menuOrder: 12
 description: Some best practices and strategies around testing serverless apps.
 layout: Doc
-publish: false
+publish: true
 -->
 
 ### Testing
-
-#### Introduction
 
 When thinking about testing serverless functions, it's useful to think in terms of unit tests that are performed against a function in isolation, and integration tests that test the system as a whole.
 Unit tests can be performed locally because they just require the code for the function, but integration tests involving SaaS can really only be performed on the deployed system (some platforms may offer local executions as part of a deployed system, which mitigates this somewhat).
@@ -112,12 +110,6 @@ This system would likely use a DynamoDB table, shared by all components of the s
 
 To extend this beyond the use of AWS services, the first logical step is HTTP calls. The system should allow similar specifications for HTTP errors, and a way to inject these errors into common HTTP libraries like requests.
 
-
-<!-- Challenges in writing integration tests?
-Integration testing: Local vs Live
-Testing that all functions for a service work in cohesion as part of a larger workflow
-Testing that the system is resilient to degradation or stability of dependent services
-Monkeyless Chaos
-Describe the pattern, its pieces, maybe a diagram
-Requirements
-Suggestions for building such a system -->
+***
+**Credits:** Ben Kehoe (@benkehoe)
+***
