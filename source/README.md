@@ -27,7 +27,7 @@ layout: Doc
     * Pathway to Serverless Development
     * Project Structure
     * Deployment
-    * Testing
+    * [Testing](./dev/testing.md)
     * Debugging
     * Examples
 
