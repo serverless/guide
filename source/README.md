@@ -15,7 +15,6 @@ layout: Doc
     * Serverless vs. PaaS
       
 * [Architecture](./architecture/README.md)
-    * A Look Back
     * The Serverless Architectural Pattern
     * Event-Driven Architecture
     * Partitioning Logic
