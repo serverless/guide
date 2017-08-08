@@ -29,9 +29,12 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
     * Serverless vs. PaaS
       
 * [Architecture](./source/architecture/README.md)
-    * The Serverless Architectural Pattern
-    * Event-Driven Architecture
-    * Partitioning Logic
+    * A Look Back
+        * [The Monolithic Architecture](./source/architecture/README.md#the-monolithic-architecture)
+        * [The Service Oriented Architecture](./source/architecture/README.md#the-service-oriented-architecture)
+        * [The Microservices Architecture](./source/architecture/README.md#the-microservices-architecture)
+    * The Serverless Architecture
+        * Patterns for Partitioning Code
 
 * [Adoption](./source/adoption/README.md)
 
