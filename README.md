@@ -8,15 +8,61 @@ layout: Doc
 
 # Serverless Guide
 
-*By the community, curated by [Serverless, Inc.](https://serverless.com/)*
+*Authored by the community, curated by [Serverless, Inc.](https://serverless.com/)*
 
-**TLDR;** [Read the guide](./source/README.md).
+## Vision
 
-## About the Guide
+This is your definitive guide to serverless architectures. Inside, you will find everything you need to know about serverless development and how to be a serverless organization: patterns, best practices, case studies and everything in-between.
 
-The open-source definitive guide on serverless architectures, patterns, case studies and more. It is a completely community-driven effort. The goal is to provide guidance and best practices for all things serverless. 
+Aside from implementation, this guide is a collection and discussion of concerns around the state and maturity of serverless. A lot is being written about serverless technology all over the web, and right now that information is fragmented. As a community, we’re bringing it together.
 
-What will be covered:
+The goal is to create a one-of-a-kind, trusted resource for developers, architects and thought leaders. This should be a valuable resource that will help drive adoption and innovation of serverless architectures.
+
+Are you with us? We want [you to be part](./README.md#how-to-contribute) of this journey.
+
+## Table Of Contents
+
+* [Introduction](./source/README.md)
+    * [The Evolution](./source/README.md#the-evolution)
+    * [What Is Serverless?](./source/README.md#what-is-serverless)
+    * Serverless In The Cloud Computing Paradigm
+    * Serverless vs. PaaS
+      
+* [Architecture](./source/architecture/README.md)
+    * The Serverless Architectural Pattern
+    * Event-Driven Architecture
+    * Partitioning Logic
+
+* [Adoption](./source/adoption/README.md)
+
+* [Development](./source/dev/README.md)
+    * Culture
+    * Pathway to Serverless Development
+    * Project Structure
+    * Deployment
+    * [Testing](./source/dev/testing.md)
+    * Debugging
+    * Examples
+
+* Toolsets
+    * Frameworks
+
+* [Operations](./source/ops/README.md)
+
+* [Security](./source/security/README.md)
+
+* [Providers](./source/providers/README.md)
+    * [AWS Lambda](./source/providers/aws.md)
+    * [Azure Functions](./source/providers/azure.md)
+    * [Google Cloud Functions](./source/providers/gcf.md)
+    * [IBM OpenWhisk](./source/providers/openwhisk.md)
+
+* [Case Studies](./source/case_studies/README.md)
+
+* [Glossary](./source/glossary.md)
+
+
+## What Will Be Covered
 
 * **Intro to serverless**: A little bit of history, evolution, misconceptions around serverless
 * **Benefits**: Get into why serverless, its benefits and characteristics
@@ -31,7 +77,7 @@ What will be covered:
 * **Case studies**: Examples of real-life implementations of serverless technologies
 
 
-## How to Contribute to the Serverless Guide
+## How to Contribute
 
 - Are you excited about the serverless movement and talk about its future?
 - Do you have an example of a serverless usecase that you want to highlight?
@@ -64,4 +110,4 @@ The serverless guide is a community-driven effort, and we thank you for your con
 
 Thanks, 
 
-Serverless Team
+The Serverless Team
