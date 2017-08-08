@@ -55,6 +55,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 * [Security](./source/security/README.md)
 
 * [Providers](./source/providers/README.md)
+    * [A Comparative Look](./source/providers/README.md#a-comparative-look)
     * [AWS Lambda](./source/providers/aws.md)
     * [Azure Functions](./source/providers/azure.md)
     * [Google Cloud Functions](./source/providers/gcf.md)
