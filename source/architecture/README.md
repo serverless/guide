@@ -31,11 +31,11 @@ The last couple of years has seen the advent of [microservices architecture](htt
 
 ### The Serverless Architecture
 
-The notion of being serverless took off with [AWS launching Lambda](https://techcrunch.com/2014/11/13/amazon-launches-lambda-an-event-driven-compute-service/) in late 2014. The idea of keeping the benefits and principles of microservices architecture, yet not having to manage underlying infrastructure and letting the provider auto-scale your application in response to load, was too good to ignore. The focus of application development changed from being infrastructure-centric to being code-centric.
+The notion of being serverless took off when [AWS launched Lambda](https://techcrunch.com/2014/11/13/amazon-launches-lambda-an-event-driven-compute-service/) in late 2014. The benefits were too good to ignore: serverless computing let you have a microservices architecture in which it wasn't necessary to manage underlying infrastructure. The provider would auto-scale your application in response to load.
 
-Serverless architectures are really opinionated microservices architectures. It's a combination of [FaaS](https://en.wikipedia.org/wiki/Function_as_a_Service) (Functions-as-a-Service) for compute and [MBaaS](https://en.wikipedia.org/wiki/Mobile_backend_as_a_service) (Mobile Backend-as-a-Service) for everything else like authentication, databases, search, cache, CDN etc. 
+Serverless architectures are really opinionated microservices architectures. It's a combination of [FaaS](https://en.wikipedia.org/wiki/Function_as_a_Service) (Functions-as-a-Service) for compute and [MBaaS](https://en.wikipedia.org/wiki/Mobile_backend_as_a_service) (Mobile Backend-as-a-Service) for everything else: authentication, databases, search, cache, CDN etc. The focus of application development changed from being infrastructure-centric to being code-centric.
 
-Serverless architectures have radically changed how applications are being built and deployed at scale. It has changed how teams interact with each other with increased autonomy and higher productivity. The further decomposition of microservices into functions has led to decoupling at an even finer-grained level. With the flexibility to map functions to events bubbling from disparate sources, event-driven architecture on serverless platforms has been revolutionizing.
+Serverless architectures have radically changed how applications are being built and deployed at scale. It has caused teams to interact with increased autonomy and higher productivity. Decomposing microservices into functions has led to decoupling at a finely-grained level, and given developers the flexibility to map functions to events that bubble up from disparate sources.
 
 Taking advantage of the event-driven nature of serverless applications, many use cases became relevant. Widely popular use cases being data processing, SPAs, Mobile and IoT applications, chat bots, event workflows to name a few.
 
