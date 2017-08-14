@@ -44,6 +44,8 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
     * Project Structure
     * Deployment
     * [Testing](./source/dev/testing.md)
+         * [Unit Testing](./source/dev/testing.md#unit-testing)
+         * [Integration Testing](./source/dev/testing.md#integration-testing)
     * Debugging
     * Examples
 
