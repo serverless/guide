@@ -22,9 +22,11 @@ Lambda functions are ideally small—a few hundred lines of code at the most—t
 
 Create an abstraction (`Boto3Wrapper` class) that provides factory methods for sessions, clients, and resources will enable caching, which will then reduce the overhead across successive function invocations. For example:
 
-```
+```python
 # in package boto3wrapper
 import boto3
+
+
 class Boto3Wrapper(object):
     _SESSION_CACHE = {}
     SESSION_CREATION_HOOK = None
@@ -44,8 +46,10 @@ class Boto3Wrapper(object):
 
 In a function, you use it in place of directly creating Session, Client, and Resource objects:
 
-```
+```python
 from boto3wrapper import Boto3Wrapper
+
+
 def handler(event, context):
     # replacing dynamodb = boto3.resource('dynamodb')
     dynamodb = Boto3Wrapper.get_resource('dynamodb')
@@ -56,9 +60,11 @@ Note that since the caching is done at the class level, it persists inside a giv
 
 Unit tests can then use this functionality:
 
-```
+```python
 import unittest2, os.path
 from boto3wrapper import Boto3Wrapper
+
+
 class MyTest(unittest2.TestCase):
     def setUp(self):
         def attach_placebo(session):
@@ -68,6 +74,7 @@ class MyTest(unittest2.TestCase):
             pill = placebo.attach(session, data_path=path)
             return session
         Boto3Wrapper.SESSION_CREATE_HOOK = attach_placebo
+
     def test_function_requirement_1(self):
         # perform test, Lambda function will automatically get
         # placebo injected on its sessions
@@ -91,7 +98,9 @@ In traditional architectures, a system like Netflix’s [Chaos Monkey](https://g
 Using SaaS components, we have no way to induce those components to behave abnormally. In a fully serverless system, the only control we have is over the code we put in. Given that constraint, how can we do integration testing similar to Chaos Monkey? What would Monkeyless Chaos look like?
 
 With the starting assumption that we are using only AWS services, and the further assumption that we are using Python (just to pick a particular SDK; the requirements work for all languages), we could establish some requirements for such a system:
-Requirements for Monkeyless Chaos
+
+
+**Requirements for Monkeyless Chaos**
 
 * A system for injecting errors into boto3 SDK calls
  * This exists, and botocore’s [Stubber](https://github.com/boto/botocore/blob/develop/botocore/stub.py) class provides a template for implementing a more focused error-injection class
