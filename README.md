@@ -20,7 +20,7 @@ The goal is to create a one-of-a-kind, trusted resource for developers, architec
 
 Are you with us? We want [you to be part](./README.md#how-to-contribute) of this journey.
 
-## Table Of Contents
+## Table of Contents
 
 * [Introduction](./source/README.md)
     * [The Evolution](./source/README.md#the-evolution)
@@ -33,7 +33,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
         * [The Monolithic Architecture](./source/architecture/README.md#the-monolithic-architecture)
         * [The Service Oriented Architecture](./source/architecture/README.md#the-service-oriented-architecture-soa)
         * [The Microservices Architecture](./source/architecture/README.md#the-microservices-architecture)
-    * The Serverless Architecture
+    * [The Serverless Architecture](./source/architecture/README.md#the-serverless-architecture)
         * Patterns for Partitioning Code
 
 * [Adoption](./source/adoption/README.md)
