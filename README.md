@@ -71,17 +71,17 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 
 ## What Will Be Covered
 
-* **Intro to serverless**: A little bit of history, evolution, misconceptions around serverless
+* **Intro to Serverless**: A little bit of history, evolution, misconceptions around serverless
 * **Benefits**: Get into why serverless, its benefits and characteristics
 * **Adoption**: Insight into the adoption by enterprises and the tech communtiy in general
-* **Architecture**: Discussions around event-driven architecture, FaaS, evolving patterns and solutions
+* **Architecture**: Discussions around serverless architecture, FaaS, evolving patterns and solutions
 * **Security**: Auth. services, access controls, surface areas for attack, data isolation...
-* **Development**: Rethinking around developing serverless applications and services
-* **Deployment & Testing**: Evolving toolchains and methodologies 
+* **Development, Deployment & Testing**: Rethinking around developing, deploying and testing serverless applications and services
+* **Toolsets**: Evolving toolsets, frameworks and methodologies 
 * **Changing DevOps**: A look into the changing roles of DevOps teams and the mindshift
-* **New set of problems**: Concerns around debugging, logging, and monitoring, of serverless applications
+* **Challenges**: Concerns around debugging, logging, and monitoring, of serverless applications
 * **Providers**: A comparative look at the serverless providers out there
-* **Case studies**: Examples of real-life implementations of serverless technologies
+* **Case Studies**: Examples of real-life implementations of serverless technologies
 
 
 ## How to Contribute
