@@ -36,16 +36,16 @@ Just like wireless internet has wires somewhere, serverless architectures still 
 
 There are 4 core tenets you should know about:
 
-1. Zero Administration
+1. **Zero Administration**:
 This is the most exciting thing about serverless. Whereas previous abstractions like VMs and containers still shared a lot of the same configuration and administration properties of servers, serverless is a completely different experience. When you're ready to deploy code, you don't have to provision anything beforehand, or manage anything afterward. There is no concept of a fleet, an instance, or even an operating system. Everything runs in the cloud and the provider manages scaling for you.
 
-1. Pay-per-execution
+1. **Pay-per-execution**:
 This is what typically incentivizes developers to try serverless for the first time. It’s alluring to have complete resource utilization without paying a cent for idle time. This tenet alone results in over 90% cost-savings over a cloud VM and immeasurable developer satisfaction in knowing that you never have to pay for resources that you don’t use.
 
-1. Function as unit of deployment
+1. **Function as unit of deployment**:
 Serverless architectures are composed of very small, independent bits of code (functions) that are loosely coupled and collaborative—also known as a microservice architecture. The main advantage? Pieces of the system are contained. They can be developed and deployed independently. The result is fewer blockers and far greater developer autonomy and productivity.
 
-1. Event-Driven
+1. **Event-Driven**:
 This aspect of serverless is the most under-the-radar right now, but is shaping up to be the most important in the long-term. Serverless functions are stateless, and essentially dormant, until they have an event to react to. The event is what brings them to life and provides them with the data/context to do their job. Event-driven architectures are nothing new, but the rise of serverless compute has renewed interest in them because serverless architectures are by definition event-driven.
 
 ***
