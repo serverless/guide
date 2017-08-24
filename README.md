@@ -50,18 +50,27 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 
 * Toolsets
     * Frameworks
+        * Apex
+        * Chalice
+        * Serverless Application Model (SAM)
+        * Serverless Framework
 
 * [Operations](./source/ops/README.md)
 
 * [Security](./source/security/README.md)
 
 * [Providers](./source/providers/README.md)
-    * [A Comparative Look](./source/providers/README.md#a-comparative-look)
-    * [AWS Lambda](./source/providers/aws.md)
-    * [Azure Functions](./source/providers/azure.md)
-    * [Google Cloud Functions](./source/providers/gcf.md)
-    * [IBM Cloud Functions](./source/providers/ibm-cloud.md)
-    * [Kubeless](./source/providers/kubeless.md)
+    * [Commercial Hosted Platforms](./source/providers/README.md#commercial-hosted-platforms)
+        * [A Comparative Look](./source/providers/README.md#a-comparative-look)
+        * [AWS Lambda](./source/providers/aws.md)
+        * [Azure Functions](./source/providers/azure.md)
+        * [Google Cloud Functions](./source/providers/gcf.md)
+        * [IBM Cloud Functions](./source/providers/ibm-cloud.md)
+    * [Opensource Platforms](./source/providers/README.md#opensourceplatforms)
+        * [A Comparative View](./source/providers/README.md#a-comparative-view)
+        * [Kubeless](./source/providers/kubeless.md)
+        * Apache OpenWhisk
+        * OpenFaaS
 
 * [Case Studies](./source/case_studies/README.md)
 
