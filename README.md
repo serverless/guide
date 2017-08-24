@@ -66,7 +66,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
         * [Azure Functions](./source/providers/azure.md)
         * [Google Cloud Functions](./source/providers/gcf.md)
         * [IBM Cloud Functions](./source/providers/ibm-cloud.md)
-    * [Opensource Platforms](./source/providers/README.md#opensourceplatforms)
+    * [Opensource Platforms](./source/providers/README.md#opensource-platforms)
         * [A Comparative View](./source/providers/README.md#a-comparative-view)
         * [Kubeless](./source/providers/kubeless.md)
         * Apache OpenWhisk
