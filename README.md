@@ -67,6 +67,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
     * [Application Vulnerabilities](./source/security/README.md#application-vulnerabilities)
     * [Access Management](./source/security/README.md#access-management)
     * [Access Segmentation](./source/security/README.md#access-segmentation)
+    * [Best Practices](./source/security/README.md#best-practices)
 
 * [Providers](./source/providers/README.md)
     * [Commercial Hosted Platforms](./source/providers/README.md#commercial-hosted-platforms)
