@@ -2,24 +2,29 @@
 title: Security
 menuText: Security
 menuOrder: 17
-description: Highlight concerns and challenges around serverless.
+description: Highlight security concerns and challenges around serverless.
 layout: Doc
-publish: false
+publish: true
 -->
 
 ## Security
 
-Serverless is ushering in a new age of application development, but this revolution is not problem free. Most notably, when dealing with serverless, we must completely rethink the way we secure our applications. How do we add security controls when we ourselves don’t have control over the operating system that executes our code? How do we add security controls when the network is abstracted? In the following piece we’ll try to provide some useful answers to these questions.
+Serverless is ushering in a new age of application development, but this revolution is not problem free. Most notably, when dealing with serverless, we must completely rethink the way we secure our applications.
 
-##### What are the new concerns and challenges?
+- How do we add security controls when we ourselves don’t have control over the operating system that executes our code? 
+- How do we add security controls when the network is abstracted?
+
+In the following piece, we’ll try to provide some useful answers to these questions.
+
+#### What are the new concerns and challenges?
 
 The main challenge when it comes to serverless security is that traditional security solutions don’t have the same efficacy with this new architecture. Traditional security solutions monitor servers and the network communication between them. In serverless however, both the servers and the network are abstracted. Furthermore, serverless functions are inherently distributed and therefore visibility is limited and normal flows are difficult to define.
 
 Additionally, implementing serverless leads to a significant increase in the amount of resources in our cloud environment that require monitoring.
 
-Other concerns include the faster pace at which the CI/CD processes is executed, and the sudden simplicity of attaching new input sources (such as creating a new trigger) to an application which can serve as a potential entry point for attackers.
+Other concerns include the faster pace at which the CI/CD processes are executed, and the sudden simplicity of attaching new input sources (such as creating a new trigger) to an application which can serve as a potential entry point for attackers.
 
-##### Are existing security best practices relevant?
+#### Are existing security best practices relevant?
 
 Not only are existing best practices still relevant, but there are certain best practices that become more critical than they were in the past. These include keeping the functions’ permissions least privileged and maintaining a least privileged build system.
 
@@ -50,7 +55,7 @@ Data can still be compromised in transit if an attacker is able to leverage a vu
 
 In serverless, application vulnerabilities are even more relevant than before. As the application now consists of mostly code and configurations, attackers will naturally focus on exploiting these layers.
 
-Other possible attack scenarios aside from exploiting application vulnerabilities include a compromised developer machine or MiTM attacks, which may result in adding a backdoor function or in hijacking existing functions in the account.
+Other possible attack scenarios aside from exploiting application vulnerabilities include a compromised developer machine or [MiTM](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attacks, which may result in adding a backdoor function or in hijacking existing functions in the account.
 
 Once a function has been compromised, an attacker will typically try to identify the access available to him by brute-forcing the cloud provider’s APIs. An attacker will attempt to use the permissions to either gain persistency, execute lateral movement or exfiltrate data from the account.
 
@@ -68,6 +73,21 @@ What also happens in serverless is a unique opportunity for the creation of well
 In AWS for example, the entity that is responsible for the function’s permissions is an IAM role. An IAM role grants permissions to attached trusted entities. Such entities might be AWS services, AWS accounts or AWS users. Each Lambda function has an IAM role which grants permissions to this specific function and is trusted by the Lambda service entity. A Lambda function in AWS is allowed to do only what the IAM role permits. It’s a highly recommended best practice to keep the role and it’s permissions least privileged.
 
 Another best practice is to only allow the build system to create or update resources in your production account. This limits the possibility of having unfamiliar resources in the account and the ability of an attacker to gain significant access to the system.
+
+### Best Practices
+
+To summarize, these are a few recommendations that will help you secure your serverless applications:
+
+- Scrutinize and research before attaching new input/event sources
+- Keep the functions’ permissions least privileged and maintain a least privileged build system
+- Amount of code that can access sensitive data be reduced, exceptions are handled and input is validated
+- Avoid embedding secrets and access keys in code
+- Do not store access keys or credentials in source code repositories
+- Throttle and define quotas on the amount of requests that go through
+- Keep data encrypted that is stored at rest
+- Scrutinize and keep tab on third party API services for vulnerabilities
+- Scan third party libraries for potential vulnerabilities and try to keep them up-to-date
+- Carefully examine granting permissions that allow creation, modification or removal of the resources
 
 ***
 **Credits:** Zohar Einy (@ZoharEiny), Avi Shulman (@avi-puresec)
