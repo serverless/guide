@@ -2,7 +2,7 @@
 title: Read Me
 menuText: Read Me
 menuOrder: 1
-description: General readme section that covers contribution guidelines, credits, contact info., and license. 
+description: General readme section that covers contribution guidelines, credits, contact info., and license.
 layout: Doc
 -->
 ![Serverless Guide](/assets/guide_repo.png)
@@ -26,7 +26,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
     * [What Is Serverless?](./source/README.md#what-is-serverless)
     * Serverless In The Cloud Computing Paradigm
     * Serverless vs. PaaS
-      
+
 * [Architecture](./source/architecture/README.md)
     * A Look Back
         * [The Monolithic Architecture](./source/architecture/README.md#the-monolithic-architecture)
@@ -58,6 +58,16 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 * [Operations](./source/ops/README.md)
 
 * [Security](./source/security/README.md)
+    * [General](./source/security/README.md#security)
+        * [What are the new concerns and challenges?](./source/security/README.md#what-are-the-new-concerns-and-challenges)
+        * [Are existing security best practices relevant?](./source/security/README.md#are-existing-security-best-practices-relevant)
+    * [Pros Of Serverless](./source/security/README.md#pros-of-serverless)
+    * [A Dynamic Attack Surface Area](./source/security/README.md#a-dynamic-attack-surface-area)
+    * [Data At Rest And Data In Transit](./source/security/README.md#data-at-rest-and-data-in-transit)
+    * [Application Vulnerabilities](./source/security/README.md#application-vulnerabilities)
+    * [Access Management](./source/security/README.md#access-management)
+    * [Access Segmentation](./source/security/README.md#access-segmentation)
+    * [Best Practices](./source/security/README.md#best-practices)
 
 * [Providers](./source/providers/README.md)
     * [Commercial Hosted Platforms](./source/providers/README.md#commercial-hosted-platforms)
@@ -85,7 +95,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 * **Architecture**: Discussions around serverless architecture, FaaS, evolving patterns and solutions
 * **Security**: Auth. services, access controls, surface areas for attack, data isolation...
 * **Development, Deployment & Testing**: Rethinking around developing, deploying and testing serverless applications and services
-* **Toolsets**: Evolving toolsets, frameworks and methodologies 
+* **Toolsets**: Evolving toolsets, frameworks and methodologies
 * **Changing DevOps**: A look into the changing roles of DevOps teams and the mindshift
 * **Challenges**: Concerns around debugging, logging, and monitoring, of serverless applications
 * **Providers**: A comparative look at the serverless providers out there
@@ -105,7 +115,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 
 **Then you have lots to share with the community.**
 
-We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) and the [contributor code of conduct](./CODE_OF_CONDUCT.md) for details. 
+We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the [contributor guidelines](./CONTRIBUTING.md) and the [contributor code of conduct](./CODE_OF_CONDUCT.md) for details.
 
 ## Credits
 
@@ -123,6 +133,6 @@ We would love to have your feedback. Or, if you have any questions, please let u
 
 The serverless guide is a community-driven effort, and we thank you for your contributions.
 
-Thanks, 
+Thanks,
 
 The Serverless Team
