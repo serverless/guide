@@ -1,0 +1,21 @@
+{
+  "title": "Serverless Guide",
+  "language": "en",
+  "direction": "ltr",
+  "structure": {
+    "readme": "book.README.md",
+    "summary": "SUMMARY.md"
+  },
+  "pdf": {
+    "pageNumbers": true,
+    "fontSize": 12,
+    "fontFamily": "Arial",
+    "paperSize": "a4",
+    "margin": {
+      "top": 56,
+      "bottom": 56,
+      "right": 62,
+      "left": 62
+    }
+  }
+}

@@ -33,3 +33,6 @@ node_modules
 # OS stuff
 .DS_Store
 .tmp
+
+ebook/calibre-portable-installer.exe
+ebook/Calibre Portable/
