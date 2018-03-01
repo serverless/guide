@@ -3,4 +3,4 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$DIR/install.sh"
 
-gitbook epub "$DIR/../.." "$DIR/../guide.epub"
+gitbook epub "$DIR_GUIDE" "$DIR_EBOOK/guide.epub"
