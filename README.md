@@ -46,7 +46,7 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
          * [Unit Testing](./source/dev/testing.md#unit-testing)
          * [Integration Testing](./source/dev/testing.md#integration-testing)
     * Debugging
-    * Examples
+    * [Examples](./source/dev/examples.md)
 
 * Toolsets
     * Frameworks
