@@ -34,5 +34,7 @@ node_modules
 .DS_Store
 .tmp
 
+book_README.md
+book_SUMMARY.md
 ebook/calibre-portable-installer.exe
 ebook/Calibre Portable/

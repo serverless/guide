@@ -1,10 +1,10 @@
 {
   "title": "Serverless Guide",
-  "language": "en",
+  "language":  "en",
   "direction": "ltr",
   "structure": {
-    "readme": "book.README.md",
-    "summary": "SUMMARY.md"
+    "readme":  "book_README.md",
+    "summary": "book_SUMMARY.md"
   },
   "pdf": {
     "pageNumbers": true,

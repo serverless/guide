@@ -7,7 +7,7 @@
     "gitbook:pdf":  "bash ./ebook/.scripts/pdf.sh",
     "gitbook:epub": "bash ./ebook/.scripts/epub.sh",
     "gitbook:mobi": "bash ./ebook/.scripts/mobi.sh",
-    "gitbook": "npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
+    "gitbook:all":  "npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
   },
   "repository": {
     "type": "git",
