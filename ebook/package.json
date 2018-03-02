@@ -1,12 +1,13 @@
 {
-  "name": "guide",
+  "name": "ebook-guide-serverless",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "",
   "scripts": {
-    "gitbook:pdf":  "bash ./ebook/.scripts/pdf.sh",
-    "gitbook:epub": "bash ./ebook/.scripts/epub.sh",
-    "gitbook:mobi": "bash ./ebook/.scripts/mobi.sh",
+    "gitbook:pdf":  "bash ./.scripts/pdf.sh",
+    "gitbook:epub": "bash ./.scripts/epub.sh",
+    "gitbook:mobi": "bash ./.scripts/mobi.sh",
     "gitbook:all":  "npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
   },
   "repository": {

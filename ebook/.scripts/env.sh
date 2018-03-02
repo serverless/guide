@@ -5,5 +5,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 export DIR_EBOOK=$(realpath "$DIR/..")
 export DIR_GUIDE=$(realpath "$DIR/../..")
 
-export PATH="$DIR:$DIR_EBOOK/Calibre Portable/Calibre:$DIR_GUIDE/node_modules/.bin:$PATH"
-export gitbook="$DIR_GUIDE/node_modules/gitbook-cli/bin/gitbook.js"
+export DIR_EBOOK_DEP="$DIR_EBOOK/dep"
+export DIR_EBOOK_SRC="$DIR_EBOOK/src"
+export DIR_EBOOK_DIST="$DIR_EBOOK/dist"
+
+[ -d "$DIR_EBOOK_SRC"  ] || mkdir "$DIR_EBOOK_SRC"
+[ -d "$DIR_EBOOK_DIST" ] || mkdir "$DIR_EBOOK_DIST"
+
+export PATH="$DIR:$DIR_EBOOK_DEP/Calibre Portable/Calibre:$DIR_EBOOK/node_modules/.bin:$PATH"
+export gitbook="$DIR_EBOOK/node_modules/gitbook-cli/bin/gitbook.js"

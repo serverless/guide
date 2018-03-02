@@ -1,12 +1,15 @@
 const fs = require('fs')
 
+const modify_relative_links = markdown => markdown.replace(/(\]\()(?:\.?\/)?((?:source|assets)\/)/g, '$1../../$2')
+
 const README   = {}
 README.path    = __dirname + '/../../README.md'
 README.content = fs.readFileSync(README.path, {encoding: "utf8"})
+README.content = modify_relative_links(README.content)
 
 const pages    = {}
-pages.README   = __dirname + '/../../book_README.md'
-pages.SUMMARY  = __dirname + '/../../book_SUMMARY.md'
+pages.README   = __dirname + '/../src/book_README.md'
+pages.SUMMARY  = __dirname + '/../src/book_SUMMARY.md'
 
 const regex = /^([\W\w]+?)(\r?\n#+\s+Table of Contents\s*[\r\n]*)([\W\w]+?)(\r?\n#+\s)([\W\w]+)$/i
 
