@@ -14,3 +14,11 @@ export DIR_EBOOK_DIST="$DIR_EBOOK/dist"
 
 export PATH="$DIR:$DIR_EBOOK_DEP/Calibre Portable/Calibre:$DIR_EBOOK/node_modules/.bin:$PATH"
 export gitbook="$DIR_EBOOK/node_modules/gitbook-cli/bin/gitbook.js"
+
+if [ -z "$GITBOOK_DIR" ]; then
+  if [ -d "$HOME/.gitbook" ]; then
+    export GITBOOK_DIR="$HOME/.gitbook"
+  else
+    export GITBOOK_DIR="$DIR_EBOOK/node_modules/gitbook"
+  fi
+fi
