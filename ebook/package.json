@@ -5,10 +5,11 @@
   "description": "",
   "main": "",
   "scripts": {
-    "gitbook:pdf":  "bash ./.scripts/pdf.sh",
-    "gitbook:epub": "bash ./.scripts/epub.sh",
-    "gitbook:mobi": "bash ./.scripts/mobi.sh",
-    "gitbook:all":  "npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
+    "gitbook:clean": "bash ./.scripts/clean.sh",
+    "gitbook:pdf":   "bash ./.scripts/pdf.sh",
+    "gitbook:epub":  "bash ./.scripts/epub.sh",
+    "gitbook:mobi":  "bash ./.scripts/mobi.sh",
+    "gitbook:all":   "npm run gitbook:clean && npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
   },
   "repository": {
     "type": "git",
