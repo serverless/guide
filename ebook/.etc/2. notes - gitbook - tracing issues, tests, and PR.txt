@@ -1080,4 +1080,102 @@ file:
   ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
   => no changes needed
 
+result:
+=======
+* made a mistake
+  * require('../models/output') is a class
+  * I need the instance of this class that's in use
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/generateBook.js
+
+code summary:
+=============
+generateBook() returns a Promise that resolves to: output
+
+module.exports = generateBook;
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/index.js
+
+code summary:
+=============
+module.exports = {
+    generate: require('./generateBook')
+}
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+
+code summary:
+=============
+var options = require('./options');
+var tmp = require('tmp');
+var Output = require('../output');
+...
+var outputFolder = tmp.dirSync().name;
+var output = Output.generate(Generator, resultBook, {
+    root: outputFolder,
+    format: format
+});
+
+thoughts:
+=========
+* what if the value of "outputFolder" was stored in "options" while the build is running, and then removed afterward?
+* even if multiple processes were running concurrently, they don't share memory..
+  * each maintains its own "require.cache"
+    * https://stackoverflow.com/questions/38588196/node-js-require-same-module-in-child-process
+
+patches:
+========
+* in file:
+    ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+* after:
+    var outputFolder = tmp.dirSync().name;
+  insert:
+    options.outputFolder = outputFolder
+
+* in file:
+    ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+* before:
+    return logger.debug.promise(fs.rmDir(outputFolder));
+  insert:
+    delete options.outputFolder
+
+* in file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+* update:
+function relative(dir, file) {
+    if (dir.substr(0,2) === '..') {
+        var outputFolder = require('../cli/options').outputFolder;
+        var currentFile = dir + '/';
+
+        var regex = {
+            "path_sep":    /[\\\/]/,
+            "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+        };
+
+        var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+        var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+        var base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+
+        var filePath = base_path + '/' + file;
+        return filePath;
+    }
+    else {
+        var isDirectory = file.slice(-1) === '/';
+        return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+    }
+}
+
+result:
+=======
+* success!!
+
 - - - -
