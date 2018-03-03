@@ -1009,3 +1009,75 @@ notes:
     * ../../ebook/.scripts/59f786f4.png
 
 - - - -
+
+conclusions:
+============
+
+the ideal function to patch would be..
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relative(dir, file) {
+    var isDirectory = file.slice(-1) === '/';
+    return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+}
+
+notes:
+======
+* how can this library obtain "outputFolder"?
+* if it can, then the earlier patches can be removed..
+  this is as far upstream as it gets..
+  all consumers would reap the benefit
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/models/output.js
+
+Output.prototype.getRoot = function() {
+    return this.getOptions().get('root');
+};
+
+Output.prototype.getOptions = function() {
+    return this.get('options');
+};
+
+module.exports = Output;
+
+- - - -
+
+possible patch #1
+=================
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relative(dir, file) {
+    if (dir.substr(0,2) === '..') {
+        var outputFolder = require('../models/output').getRoot();
+        var currentFile = dir + '/';
+
+        var regex = {
+            "path_sep":    /[\\\/]/,
+            "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+        };
+
+        var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+        var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+        var base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+
+        var filePath = base_path + '/' + file;
+        return filePath;
+    }
+    else {
+        var isDirectory = file.slice(-1) === '/';
+        return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+    }
+}
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+  => no changes needed
+
+- - - -
