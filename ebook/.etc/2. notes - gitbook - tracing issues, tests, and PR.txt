@@ -760,3 +760,252 @@ what's not working:
       <p><img src="../../ebook/.scripts/59f786f4.png"></p>
 
 - - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relativeForFile(baseFile, file) {
+    return relative(path.dirname(baseFile), file);
+}
+
+function relative(dir, file) {
+    var isDirectory = file.slice(-1) === '/';
+    return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+}
+
+function normalize(s) {
+    return path.normalize(s).replace(/\\/g, '/');
+}
+
+notes:
+======
+* surprisingly, there's very little custom logic
+* all of the work is being done by: require('path').relative(dir, file)
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/conrefsLoader.js
+
+code summary:
+=============
+    resolve: function(from, to) {
+        if (PathUtils.isInRoot(this.rootFolder, from))
+            return PathUtils.resolveInRoot(this.rootFolder, href);
+        else
+            return path.resolve(path.dirname(from), to);
+    }
+
+notes:
+======
+* this code never gets called
+* not the culprit
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+code summary:
+=============
+function onPage(output, page) {
+    ...
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+}
+
+notes:
+======
+* bingo..
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = ../ebook/.scripts
+    - outputDirName = ../../source/security
+      basePath = ../../ebook/.scripts
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+possible patch #1:
+==================
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    function resolveFileNotWithinRoot() {
+        var outputFolder = output.getRoot();
+        var currentFile = outputDirName;
+
+        if (currentFile.substr(0,2) === '..') {
+            var regex = {
+                "path_sep":    /[\\\/]/,
+                "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+            };
+
+            var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+            var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+            basePath = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+        }
+    }
+    resolveFileNotWithinRoot();
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+
+result:
+=======
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = .temp/tmp-6788Mk1g5cRlAI7m
+    - outputDirName = ../../source/security
+      basePath = ../.temp/tmp-6788Mk1g5cRlAI7m
+
+* images are still 404:
+    <img src="../../ebook/.scripts/59f786f4.png">
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+possible patch #2:
+==================
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    function resolveFileNotWithinRoot() {
+        var outputFolder = output.getRoot();
+        var currentFile = outputDirName + '/';
+
+        if (currentFile.substr(0,2) === '..') {
+            var regex = {
+                "path_sep":    /[\\\/]/,
+                "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+            };
+
+            var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+            var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+            basePath = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+        }
+    }
+    resolveFileNotWithinRoot();
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+
+result:
+=======
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = ../.temp/tmp-4316Hj8WoULI5ZKl
+    - outputDirName = ../../source/security
+      basePath = ../../.temp/tmp-4316Hj8WoULI5ZKl
+
+* images are still 404:
+    <img src="../../ebook/.scripts/59f786f4.png">
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/renderFile.js
+
+var render = require('./render');
+...
+return render(engine, result.path, result.src, context);
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/render.js
+
+var TemplateOutput = require('../models/templateOutput');
+...
+return TemplateOutput.create(content, blocks);
+
+notes:
+======
+* "content" is markdown
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/models/templateOutput.js
+
+notes:
+======
+* dead end..
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/generatePage.js
+
+code summary:
+=============
+  // get markdown
+  var output = Templating.render(engine, absoluteFilePath, content, context)
+  var content = output.getContent()
+
+  // convert markdown to html
+  var result = parser.parsePage(content)
+
+  // inspect an image link
+  if (filePath.indexOf('ibm-cloud') >= 0) {
+    let html = result.content
+    let regex = /<img src="([^"]+)"/g
+    let images = []
+    let image
+
+    while ((image = regex.exec(html)) !== null) {
+      images.push(image[1])
+    }
+
+    console.log(images)
+    process.exit(1)
+  }
+
+  // <h3>How It Works</h3>
+  // <p><img src="https://cdn.thenewstack.io/media/2017/01/fb6d2769-openwhisk_arch.png" alt="IBM Cloud Functions Architecture"></p>
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/modifiers/fetchRemoteImages.js
+
+code summary:
+=============
+// remote URL
+var src = $img.attr('src')
+
+// local filename from hash
+var hash = crc.crc32(src).toString(16);
+var fileName = hash + extension;
+var filePath = path.join(rootFolder, fileName);
+
+// download image
+fs.download(src, filePath)
+
+// modify <img> tag
+src = LocationUtils.relative(currentDirectory, fileName);
+$img.replaceWith('<img src="' + src + '" />')
+
+notes:
+======
+* LocationUtils.relative() is where things break
+  * stack trace:
+    * ../../ebook/.scripts/59f786f4.png
+
+- - - -
