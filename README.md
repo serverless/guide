@@ -86,6 +86,9 @@ Are you with us? We want [you to be part](./README.md#how-to-contribute) of this
 
 * [Glossary](./source/glossary.md)
 
+## eBook
+
+Read the ebook version instead? Check out the [pdf](https://github.com/serverless/guide/blob/master/ebook/dist/guide.pdf), [epub](https://github.com/serverless/guide/blob/master/ebook/dist/guide.epub) and [mobi](https://github.com/serverless/guide/blob/master/ebook/dist/guide.mobi) versions. Thanks @warren-bank.
 
 ## What Will Be Covered
 
