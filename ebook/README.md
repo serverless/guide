@@ -1,6 +1,6 @@
-#### use gitbook to generate ebook in 3 formats (pdf,epub,mobi)
+#### Use gitbook to generate ebook in 3 formats (pdf,epub,mobi)
 
-##### usage:
+##### Generate
 ```bash
 cd ebook
 rm -rf dist
@@ -8,7 +8,8 @@ npm install
 npm run 'gitbook:all'
 ```
 
-##### notes:
+##### Notes
+
 * [Calibre](https://calibre-ebook.com/download) is an external dependency
   * under Windows:
     * the npm script will automatically download and install the PortableApps version of Calibre to: `ebook/dep`
@@ -16,7 +17,12 @@ npm run 'gitbook:all'
   * for other platforms:
     * please confirm that its `ebook-convert` binary can be found in `$PATH`: `which "ebook-convert"`
 
-##### download links for ebooks of the current commit of the _Serverless Guide_:
+##### Download
+
 * [pdf](./dist/guide.pdf)
 * [epub](./dist/guide.epub)
 * [mobi](./dist/guide.mobi)
+
+***
+**Credits:** Warren Bank (@warren-bank)
+***
