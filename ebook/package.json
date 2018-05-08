@@ -1,0 +1,29 @@
+{
+  "name": "ebook-guide-serverless",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "gitbook:clean": "bash ./.scripts/clean.sh",
+    "gitbook:pdf": "bash ./.scripts/pdf.sh",
+    "gitbook:epub": "bash ./.scripts/epub.sh",
+    "gitbook:mobi": "bash ./.scripts/mobi.sh",
+    "gitbook:all": "npm run gitbook:clean && npm run gitbook:pdf && npm run gitbook:epub && npm run gitbook:mobi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/serverless/guide.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "CC BY-SA 4.0",
+  "bugs": {
+    "url": "https://github.com/serverless/guide/issues"
+  },
+  "homepage": "https://github.com/serverless/guide#readme",
+  "devDependencies": {
+    "gitbook-cli": "^2.3.2",
+    "svgexport": "^0.3.2"
+  }
+}

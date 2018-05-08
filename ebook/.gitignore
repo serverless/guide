@@ -1,0 +1,9 @@
+node_modules/
+dep/
+
+src/book_README.md
+src/book_SUMMARY.md
+src/assets/
+src/source/
+
+!dist/

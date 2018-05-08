@@ -1,0 +1,20 @@
+https://github.com/GitbookIO/gitbook
+
+https://toolchain.gitbook.com/setup.html
+  npm install gitbook-cli -g
+
+https://toolchain.gitbook.com/ebook.html
+  gitbook pdf ./ ./mybook.pdf
+
+https://toolchain.gitbook.com/structure.html
+https://toolchain.gitbook.com/config.html
+https://toolchain.gitbook.com/pages.html
+
+https://toolchain.gitbook.com/plugins/
+https://toolchain.gitbook.com/plugins/create.html
+https://toolchain.gitbook.com/plugins/hooks.html
+
+https://calibre-ebook.com/download
+https://calibre-ebook.com/download_portable
+https://calibre-ebook.com/dist/portable
+https://download.calibre-ebook.com/3.18.0/calibre-portable-installer-3.18.0.exe

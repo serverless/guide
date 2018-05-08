@@ -1,0 +1,1181 @@
+- - - -
+
+https://toolchain.gitbook.com/templating/
+https://toolchain.gitbook.com/templating/variables.html
+
+https://mozilla.github.io/nunjucks/
+https://mozilla.github.io/nunjucks/api.html
+https://mozilla.github.io/nunjucks/templating.html#dump
+
+- - - -
+
+https://github.com/GitbookIO/theme-default/blob/master/_layouts/ebook/page.html
+  <link rel="stylesheet" href="{{ "ebook.css"|resolveAsset }}">
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/node_modules/gitbook-plugin-theme-default/_layouts/ebook/page.html
+
+add to:
+  {% block page %}
+element:
+  <h1>css file: {{ "ebook.css"|resolveAsset }}</h1><hr />
+
+result (in generated pdf):
+* book_README.md
+    css file: gitbook/ebook.css
+* otherwise:
+    css file: ../../ebook/.scripts/gitbook/ebook.css
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/node_modules/gitbook-plugin-theme-default/_layouts/ebook/page.html
+
+add to:
+  {% block page %}
+element:
+  <h1>file path: {{ file.path }}</h1><hr />
+
+result (in generated pdf):
+* book_README.md
+    file.path: book_README.md
+* otherwise:
+    file path: ../../source/README.md
+
+- - - -
+
+https://github.com/GitbookIO/gitbook/blob/master/lib/output/website/createTemplateEngine.js
+  resolveFile: function(filePath)  {...}
+  resolveAsset: function(filePath) {...}
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+
+notes:
+* within function:
+    resolveAsset: function(filePath) {...}
+* goes to shit at:
+    LocationUtils.relativeForFile(currentFile, filePath)
+  where initial values are:
+    currentFile = '../../source/README.md'
+    filePath = 'pdf.css'
+  returns:
+    '../ebook/.scripts/gitbook/pdf.css'
+
+* after the line:
+    filePath = LocationUtils.relativeForFile(currentFile, filePath)
+  modify value:
+    filePath = filePath.replace(/\/\.scripts\//g, '/src/')
+  returns:
+    '../ebook/src/gitbook/pdf.css'
+
+* Calibre creates a directory under $TEMP
+  * contains 2 subdirs:
+    * one has a lot of html files, which correspond to the individual markdown files
+    * the other pertains to pdf
+
+- - - -
+
+https://github.com/GitbookIO/gitbook/blob/master/lib/output/ebook/onFinish.js
+  function writeSummary(output) {
+    var engine = WebsiteGenerator.createTemplateEngine(output, filePath)
+
+    return Templating.renderFile(engine, prefix + '/summary.html', context)
+    .then(function(tplOut) {
+        return writeFile(output, filePath, tplOut.getContent())
+    })
+  }
+
+  function runEbookConvert(output) {
+    ...
+    var cmd = [
+        'ebook-convert',
+        path.resolve(outputFolder, SUMMARY_FILE),
+        path.resolve(outputFolder, 'index.' + format),
+        command.optionsToShellArgs(options)
+    ].join(' ');
+
+    return command.exec(cmd)
+  }
+
+  function onFinish(output) {
+    return writeSummary(output)
+    .then(runEbookConvert);
+  }
+
+  module.exports = onFinish
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/ebook/onFinish.js
+
+* at the line:
+    return command.exec(cmd)
+  replace with:
+    return command.exec(cmd).then(() => process.exit(0))
+  result:
+    * $TEMP/calibreXXXXX/*
+      - directory is removed after `cmd` completes
+    * $TEMP/tmp-YYYYY/*
+      $TEMP/tmp-YYYYY/SUMMARY.html
+      $TEMP/tmp-YYYYY/index.html
+      $TEMP/tmp-YYYYY/index.pdf
+      - both HTML files contain links:
+          <a href="../../source/ZZZ.html">ZZZ</a>
+      - neither HTML files contain the content of these links
+      - the PDF file DOES  contain the content of these links
+          * it's the fully generated output
+            - includes: cover image, TOC, README, linked pages, glossary
+            - CSS is still incorrect
+    * $TEMP/tmp-YYYYY/../../source
+      - resolves to:
+        $HOME/source
+        * where:
+          $TEMP = "$HOME/.temp"
+      - remarkably, this directory DOES exist!
+
+notes:
+* both directories:
+    $TEMP/tmp-YYYYY/*
+    $HOME/source/*
+  would normally be removed after gitbook completes
+* by prematurely killing the process,
+  both directories are retained,
+  and their respective contents can be inspected
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/ebook/onFinish.js
+
+* before the line:
+    var cmd = [...]
+  prepend:
+    console.log('outputFolder =', JSON.stringify(outputFolder))
+    console.log('options =', JSON.stringify(options, null, 2))
+    process.exit(1)
+  result:
+    outputFolder = "C:\\PortableApps\\git\\2.16.2\\PortableGit\\home\\.temp\\tmp-3848dTUS2D60YgdC"
+    options = {
+        "--cover": "C:\\PortableApps\\git\\2.16.2\\PortableGit\\home\\.temp\\tmp-3848dTUS2D60YgdC\\cover.jpg",
+        "--title": "Serverless Guide",
+        "--language": "en",
+        "--book-producer": "GitBook",
+        "--publisher": "GitBook",
+        "--chapter": "descendant-or-self::*[contains(concat(' ', normalize-space(@class), ' '), ' book-chapter ')]",
+        "--level1-toc": "descendant-or-self::*[contains(concat(' ', normalize-space(@class), ' '), ' book-chapter-1 ')]",
+        "--level2-toc": "descendant-or-self::*[contains(concat(' ', normalize-space(@class), ' '), ' book-chapter-2 ')]",
+        "--level3-toc": "descendant-or-self::*[contains(concat(' ', normalize-space(@class), ' '), ' book-chapter-3 ')]",
+        "--max-levels": "1",
+        "--no-chapters-in-toc": true,
+        "--breadth-first": true,
+        "--chapter-mark": "pagebreak",
+        "--page-breaks-before": "/",
+        "--margin-left": "62",
+        "--margin-right": "62",
+        "--margin-top": "56",
+        "--margin-bottom": "56",
+        "--pdf-default-font-size": "12",
+        "--pdf-mono-font-size": "12",
+        "--paper-size": "a4",
+        "--pdf-page-numbers": true,
+        "--pdf-sans-family": "Arial",
+        "--pdf-header-template": "\n<!DOCTYPE HTML>\n<html lang=\"en\" style=\"font-family: sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">\n        <title>_SECTION_</title>\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"generator\" content=\"GitBook 3.2.3\">\n        \n        \n        \n    \n    \n        \n        \n        \n    \n\n    \n            \n        \n\n    \n\n    \n        \n    \n        \n    \n        \n    \n        \n    \n        \n    \n        \n    \n\n        \n    </head>\n    <body style=\"margin: 0; font-family: sans-serif; color: #000; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\">\n        \n<div class=\"pdf-header\" style=\"margin-top: 20px; padding-bottom: 10px; border-bottom: 1px solid #eee; color: #aaa;\">\n    <span>_SECTION_</span>\n</div>\n\n        \n    </body>\n</html>\n\n",
+        "--pdf-footer-template": "\n<!DOCTYPE HTML>\n<html lang=\"en\" style=\"font-family: sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;\">\n    <head>\n        <meta charset=\"UTF-8\">\n        <meta content=\"text/html; charset=utf-8\" http-equiv=\"Content-Type\">\n        <title>_SECTION_</title>\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"generator\" content=\"GitBook 3.2.3\">\n        \n        \n        \n    \n    \n        \n        \n        \n    \n\n    \n            \n        \n\n    \n\n    \n        \n    \n        \n    \n        \n    \n        \n    \n        \n    \n        \n    \n\n        \n    </head>\n    <body style=\"margin: 0; font-family: sans-serif; color: #000; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;\">\n        \n<div class=\"pdf-footer\" style=\"margin-top: 20px; padding-top: 10px; border-top: 1px solid #eee; color: #aaa;\">\n    <span></span>\n    <span class=\"footer-pages-count\" style=\"float: right;\">_PAGENUM_</span>\n</div>\n\n        \n    </body>\n</html>\n\n"
+    }
+
+notes:
+* nothing too helpful here
+
+- - - -
+
+https://manual.calibre-ebook.com/generated/en/ebook-convert.html
+  "ebook-convert" documentation: command-line options
+
+- - - -
+
+conclusions:
+* the real issue is that MD (markdown) files are being converted to HTML files,
+  and the output is saved to a directory outside of $TEMP
+  * this breaks relative paths in the HTML files outside of $TEMP
+    - example:
+      * <link rel="stylesheet" href="../ebook/.scripts/gitbook/gitbook-plugin-highlight/ebook.css">
+      * for this link to work, it would need to be changed to:
+        <link rel="stylesheet" href="../.temp/tmp-3848dTUS2D60YgdC/gitbook/gitbook-plugin-highlight/ebook.css">
+
+- - - -
+
+idea #1..
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/ebook/onFinish.js
+
+* before the line:
+    var cmd = [...]
+  prepend:
+    options["--extra-css"] = [`${outputFolder}/gitbook/${format}.css`, `${outputFolder}/gitbook/gitbook-plugin-highlight/ebook.css`]
+  result:
+    no additional css <link /> elements were added to the converted HTML files
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/node_modules/gitbook-plugin-theme-default/_layouts/ebook/page.html
+
+add to:
+  {% block page %}
+element:
+<!--
+====================================================================================================
+book = {{ book | dump }}
+====================================================================================================
+gitbook = {{ gitbook | dump }}
+====================================================================================================
+page = {{ page | dump }}
+====================================================================================================
+file = {{ file | dump }}
+====================================================================================================
+readme = {{ readme | dump }}
+====================================================================================================
+glossary = {{ glossary | dump }}
+====================================================================================================
+summary = {{ summary | dump }}
+====================================================================================================
+languages = {{ languages | dump }}
+====================================================================================================
+output = {{ output | dump }}
+====================================================================================================
+config = {{ config | dump }}
+====================================================================================================
+-->
+
+result (in converted HTML):
+
+* $TEMP/tmp-YYYYY/index.html
+    ====================================================================================================
+    book = {}
+    ====================================================================================================
+    gitbook = {"version":"3.2.3","time":"2018-03-02T23:44:16.883Z"}
+    ====================================================================================================
+    page = {"title":"Introduction","level":"1.1","depth":1,"next":{"title":"Introduction","level":"1.2","depth":1,"path":"../../source/README.md","ref":"../../source/README.md","articles":[{"title":"The Evolution","level":"1.2.1","depth":2,"anchor":"#the-evolution","path":"../../source/README.md","ref":"../../source/README.md#the-evolution","articles":[]},{"title":"What Is Serverless?","level":"1.2.2","depth":2,"anchor":"#what-is-serverless","path":"../../source/README.md","ref":"../../source/README.md#what-is-serverless","articles":[]},{"title":"Serverless In The Cloud Computing Paradigm","level":"1.2.3","depth":2,"ref":"","articles":[]},{"title":"Serverless vs. PaaS","level":"1.2.4","depth":2,"ref":"","articles":[]}]},"content":"<!--\ntitle: Read Me\nmenuText: Read Me\nmenuOrder: 1\ndescription: General readme section that covers contribution guidelines, credits, contact info., and license.\nlayout: Doc\n-->\n<p><img src=\"../../assets/guide_repo.png\" alt=\"Serverless Guide\"></p>\n<p><em>Authored by the community, curated by <a href=\"https://serverless.com/\" target=\"_blank\">Serverless, Inc.</a></em></p>\n<h2 id=\"vision\">Vision</h2>\n<p>This is your definitive guide to serverless architectures. Inside, you will find everything you need to know about serverless development and how to be a serverless organization: patterns, best practices, case studies and everything in-between.</p>\n<p>Aside from implementation, this guide is a collection and discussion of concerns around the state and maturity of serverless. A lot is being written about serverless technology all over the web, and right now that information is fragmented. As a community, we&#x2019;re bringing it together.</p>\n<p>The goal is to create a one-of-a-kind, trusted resource for developers, architects and thought leaders. This should be a valuable resource that will help drive adoption and innovation of serverless architectures.</p>\n<p>Are you with us? We want <a href=\"README.md#how-to-contribute\">you to be part</a> of this journey.</p>\n<h2 id=\"what-will-be-covered\">What Will Be Covered</h2>\n<ul>\n<li><strong>Intro to Serverless</strong>: A little bit of history, evolution, misconceptions around serverless</li>\n<li><strong>Benefits</strong>: Get into why serverless, its benefits and characteristics</li>\n<li><strong>Adoption</strong>: Insight into the adoption by enterprises and the tech communtiy in general</li>\n<li><strong>Architecture</strong>: Discussions around serverless architecture, FaaS, evolving patterns and solutions</li>\n<li><strong>Security</strong>: Auth. services, access controls, surface areas for attack, data isolation...</li>\n<li><strong>Development, Deployment &amp; Testing</strong>: Rethinking around developing, deploying and testing serverless applications and services</li>\n<li><strong>Toolsets</strong>: Evolving toolsets, frameworks and methodologies</li>\n<li><strong>Changing DevOps</strong>: A look into the changing roles of DevOps teams and the mindshift</li>\n<li><strong>Challenges</strong>: Concerns around debugging, logging, and monitoring, of serverless applications</li>\n<li><strong>Providers</strong>: A comparative look at the serverless providers out there</li>\n<li><strong>Case Studies</strong>: Examples of real-life implementations of serverless technologies</li>\n</ul>\n<h2 id=\"how-to-contribute\">How to Contribute</h2>\n<ul>\n<li>Are you excited about the serverless movement and talk about its future?</li>\n<li>Do you have an example of a serverless usecase that you want to highlight?</li>\n<li>Are you a developer who has expertise in a particular serverless provider?</li>\n<li>Do you work for a provider and see some inconsistencies in the content?</li>\n<li>Is there an architectural pattern that you feel solves a specific usecase?</li>\n<li>Do you have a success story that you would like to share?</li>\n<li>Have you been successful with a specific vendor or a platform?</li>\n<li>Do you have an opinion/quote that you would like to share?</li>\n</ul>\n<p><strong>Then you have lots to share with the community.</strong></p>\n<p>We want your contributions to this guide. We would like you to bring in your expertise to showcase them in this guide. We are aiming to create a world-class guide that excites everyone to join the serverless movement. We feel we can achieve that by creating authentic content that is driven by the community. See the <a href=\"CONTRIBUTING.md\">contributor guidelines</a> and the <a href=\"CODE_OF_CONDUCT.md\">contributor code of conduct</a> for details.</p>\n<h2 id=\"credits\">Credits</h2>\n<p>To recognize your contributions to the guide, we encourage you to add your name to the Credits section on a page. We will add you to the &apos;Guide Authors&apos; team on our Github org. You also get our serverless badge <a href=\"http://www.serverless.com\" target=\"_blank\"><img src=\"32a336d5.png\"></a> for your Github profile.</p>\n<h2 id=\"get-in-touch\">Get in Touch</h2>\n<p>We would love to have your feedback. Or, if you have any questions, please let us know at hello@serverless.com.</p>\n<h2 id=\"license\">License</h2>\n<p><a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\" target=\"_blank\"><img src=\"c904adad.png\"></a><br>This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\" target=\"_blank\">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>\n<h2 id=\"thanks-in-advance\">Thanks in Advance</h2>\n<p>The serverless guide is a community-driven effort, and we thank you for your contributions.</p>\n<p>Thanks,</p>\n<p>The Serverless Team</p>\n","dir":"ltr"}
+    ====================================================================================================
+    file = {"path":"book_README.md","mtime":"2018-03-02T07:17:48.228Z","type":"markdown"}
+    ====================================================================================================
+    readme = {"file":{"path":"book_README.md","mtime":"2018-03-02T07:17:48.228Z","type":"markdown"}}
+    ====================================================================================================
+    glossary = {"entries":{}}
+    ====================================================================================================
+    summary = {"file":{"path":"book_SUMMARY.md","mtime":"2018-03-02T07:17:48.228Z","type":"markdown"},"parts":[{"title":"","articles":[{"title":"Introduction","level":"1.1","depth":1,"path":"book_README.md","ref":"book_README.md","articles":[]},{"title":"Introduction","level":"1.2","depth":1,"path":"../../source/README.md","ref":"../../source/README.md","articles":[{"title":"The Evolution","level":"1.2.1","depth":2,"anchor":"#the-evolution","path":"../../source/README.md","ref":"../../source/README.md#the-evolution","articles":[]},{"title":"What Is Serverless?","level":"1.2.2","depth":2,"anchor":"#what-is-serverless","path":"../../source/README.md","ref":"../../source/README.md#what-is-serverless","articles":[]},{"title":"Serverless In The Cloud Computing Paradigm","level":"1.2.3","depth":2,"ref":"","articles":[]},{"title":"Serverless vs. PaaS","level":"1.2.4","depth":2,"ref":"","articles":[]}]},{"title":"Architecture","level":"1.3","depth":1,"path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md","articles":[{"title":"A Look Back","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"The Monolithic Architecture","level":"1.3.1.1","depth":3,"anchor":"#the-monolithic-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-monolithic-architecture","articles":[]},{"title":"The Service Oriented Architecture","level":"1.3.1.2","depth":3,"anchor":"#the-service-oriented-architecture-soa","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-service-oriented-architecture-soa","articles":[]},{"title":"The Microservices Architecture","level":"1.3.1.3","depth":3,"anchor":"#the-microservices-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-microservices-architecture","articles":[]}]},{"title":"The Serverless Architecture","level":"1.3.2","depth":2,"anchor":"#the-serverless-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-serverless-architecture","articles":[{"title":"Patterns for Partitioning Code","level":"1.3.2.1","depth":3,"ref":"","articles":[]}]}]},{"title":"Adoption","level":"1.4","depth":1,"path":"../../source/adoption/README.md","ref":"../../source/adoption/README.md","articles":[]},{"title":"Development","level":"1.5","depth":1,"path":"../../source/dev/README.md","ref":"../../source/dev/README.md","articles":[{"title":"Culture","level":"1.5.1","depth":2,"ref":"","articles":[]},{"title":"Pathway to Serverless Development","level":"1.5.2","depth":2,"ref":"","articles":[]},{"title":"Project Structure","level":"1.5.3","depth":2,"ref":"","articles":[]},{"title":"Deployment","level":"1.5.4","depth":2,"ref":"","articles":[]},{"title":"Testing","level":"1.5.5","depth":2,"path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md","articles":[{"title":"Unit Testing","level":"1.5.5.1","depth":3,"anchor":"#unit-testing","path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md#unit-testing","articles":[]},{"title":"Integration Testing","level":"1.5.5.2","depth":3,"anchor":"#integration-testing","path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md#integration-testing","articles":[]}]},{"title":"Debugging","level":"1.5.6","depth":2,"ref":"","articles":[]},{"title":"Examples","level":"1.5.7","depth":2,"ref":"","articles":[]}]},{"title":"Toolsets","level":"1.6","depth":1,"ref":"","articles":[{"title":"Frameworks","level":"1.6.1","depth":2,"ref":"","articles":[{"title":"Apex","level":"1.6.1.1","depth":3,"ref":"","articles":[]},{"title":"Chalice","level":"1.6.1.2","depth":3,"ref":"","articles":[]},{"title":"Serverless Application Model (SAM)","level":"1.6.1.3","depth":3,"ref":"","articles":[]},{"title":"Serverless Framework","level":"1.6.1.4","depth":3,"ref":"","articles":[]}]}]},{"title":"Operations","level":"1.7","depth":1,"path":"../../source/ops/README.md","ref":"../../source/ops/README.md","articles":[]},{"title":"Security","level":"1.8","depth":1,"path":"../../source/security/README.md","ref":"../../source/security/README.md","articles":[{"title":"General","level":"1.8.1","depth":2,"anchor":"#security","path":"../../source/security/README.md","ref":"../../source/security/README.md#security","articles":[{"title":"What are the new concerns and challenges?","level":"1.8.1.1","depth":3,"anchor":"#what-are-the-new-concerns-and-challenges","path":"../../source/security/README.md","ref":"../../source/security/README.md#what-are-the-new-concerns-and-challenges","articles":[]},{"title":"Are existing security best practices relevant?","level":"1.8.1.2","depth":3,"anchor":"#are-existing-security-best-practices-relevant","path":"../../source/security/README.md","ref":"../../source/security/README.md#are-existing-security-best-practices-relevant","articles":[]}]},{"title":"Pros Of Serverless","level":"1.8.2","depth":2,"anchor":"#pros-of-serverless","path":"../../source/security/README.md","ref":"../../source/security/README.md#pros-of-serverless","articles":[]},{"title":"A Dynamic Attack Surface Area","level":"1.8.3","depth":2,"anchor":"#a-dynamic-attack-surface-area","path":"../../source/security/README.md","ref":"../../source/security/README.md#a-dynamic-attack-surface-area","articles":[]},{"title":"Data At Rest And Data In Transit","level":"1.8.4","depth":2,"anchor":"#data-at-rest-and-data-in-transit","path":"../../source/security/README.md","ref":"../../source/security/README.md#data-at-rest-and-data-in-transit","articles":[]},{"title":"Application Vulnerabilities","level":"1.8.5","depth":2,"anchor":"#application-vulnerabilities","path":"../../source/security/README.md","ref":"../../source/security/README.md#application-vulnerabilities","articles":[]},{"title":"Access Management","level":"1.8.6","depth":2,"anchor":"#access-management","path":"../../source/security/README.md","ref":"../../source/security/README.md#access-management","articles":[]},{"title":"Access Segmentation","level":"1.8.7","depth":2,"anchor":"#access-segmentation","path":"../../source/security/README.md","ref":"../../source/security/README.md#access-segmentation","articles":[]},{"title":"Best Practices","level":"1.8.8","depth":2,"anchor":"#best-practices","path":"../../source/security/README.md","ref":"../../source/security/README.md#best-practices","articles":[]}]},{"title":"Providers","level":"1.9","depth":1,"path":"../../source/providers/README.md","ref":"../../source/providers/README.md","articles":[{"title":"Commercial Hosted Platforms","level":"1.9.1","depth":2,"anchor":"#commercial-hosted-platforms","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#commercial-hosted-platforms","articles":[{"title":"A Comparative Look","level":"1.9.1.1","depth":3,"anchor":"#a-comparative-look","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#a-comparative-look","articles":[]},{"title":"AWS Lambda","level":"1.9.1.2","depth":3,"path":"../../source/providers/aws.md","ref":"../../source/providers/aws.md","articles":[]},{"title":"Azure Functions","level":"1.9.1.3","depth":3,"path":"../../source/providers/azure.md","ref":"../../source/providers/azure.md","articles":[]},{"title":"Google Cloud Functions","level":"1.9.1.4","depth":3,"path":"../../source/providers/gcf.md","ref":"../../source/providers/gcf.md","articles":[]},{"title":"IBM Cloud Functions","level":"1.9.1.5","depth":3,"path":"../../source/providers/ibm-cloud.md","ref":"../../source/providers/ibm-cloud.md","articles":[]}]},{"title":"Opensource Platforms","level":"1.9.2","depth":2,"anchor":"#opensource-platforms","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#opensource-platforms","articles":[{"title":"A Comparative View","level":"1.9.2.1","depth":3,"anchor":"#a-comparative-view","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#a-comparative-view","articles":[]},{"title":"Kubeless","level":"1.9.2.2","depth":3,"path":"../../source/providers/kubeless.md","ref":"../../source/providers/kubeless.md","articles":[]},{"title":"Apache OpenWhisk","level":"1.9.2.3","depth":3,"ref":"","articles":[]},{"title":"OpenFaaS","level":"1.9.2.4","depth":3,"ref":"","articles":[]}]}]},{"title":"Case Studies","level":"1.10","depth":1,"path":"../../source/case_studies/README.md","ref":"../../source/case_studies/README.md","articles":[]},{"title":"Glossary","level":"1.11","depth":1,"path":"../../source/glossary.md","ref":"../../source/glossary.md","articles":[]}]}]}
+    ====================================================================================================
+    languages = 
+    ====================================================================================================
+    output = {"name":"ebook"}
+    ====================================================================================================
+    config = {"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"book_README.md","glossary":"GLOSSARY.md","summary":"book_SUMMARY.md"},"variables":{},"title":"Serverless Guide","language":"en","gitbook":"*","direction":"ltr"}
+    ====================================================================================================
+
+* $HOME/source/index.html:
+    ====================================================================================================
+    book = {}
+    ====================================================================================================
+    gitbook = {"version":"3.2.3","time":"2018-03-02T23:44:16.883Z"}
+    ====================================================================================================
+    page = {"title":"Introduction","level":"1.2","depth":1,"next":{"title":"The Evolution","level":"1.2.1","depth":2,"anchor":"#the-evolution","path":"../../source/README.md","ref":"../../source/README.md#the-evolution","articles":[]},"previous":{"title":"Introduction","level":"1.1","depth":1,"path":"book_README.md","ref":"book_README.md","articles":[]},"content":"<!--\ntitle: Introduction\nmenuText: Introduction\nmenuOrder: 5\ndescription: Introduction section of the guide\nlayout: Doc\n-->\n<h2 id=\"introduction\">Introduction</h2>\n<p>After a decade of cloud computing, we are at the crossroads of a paradigm shift in technology. Barring the confusion and the misconception of the term &quot;serverless&quot;, serverless computing is the talk of the town. Serverless is being heralded as the pinnacle of cloud computing.</p>\n<p>Serverless is a new way to approach cloud computing and AWS Lambda trailblazed the path with its serverless compute platform. It provided an event-driven, functions based, pay-per-execution, auto-scaling serverless computing platform. It is liberating the developers from constantly thinking about infrastructure and the means to manage them. It is set to bring the focus back on building and shipping products in an agile and iterative manner.</p>\n<p>From an application development perspective, serverless computing makes functions as the unit of development. Based on event-driven architecture, it is creating an ecosystem where events will flow seamlessly across product boundaries, ushering a new era of composability and sharing. Heterogenous systems and disparate services will be talking to each other based on universal event specs, forming the basis for a large-scale, distributed system. The services and their functions could be discovered, shared and eventually run across infrastructure or provider boundaries.</p>\n<p>Serverless computing is <em>not</em> here to replace every other computing platform out there. It is here to augment them. It will help us re-think how we build applications for tomorrow. It is a disruptive technology that will change how we code.</p>\n<h3 id=\"the-evolution\">The Evolution</h3>\n<p>Back in the sixties, the concept of delivering computing capabilities over a global network was being envisioned. The vision was to have everyone interconnected and access applications &amp; data, from any site, across the globe. In the nineties, with the internet gaining more popularity, the web technologies started maturing. It created a need for hosting these websites. ISPs mushroomed the landscape and hosting providers lined up infrastructure, renting shared resources to satisfy the need. Soon enough, a larger scale and distributed hosting strategy gave rise to global data-centers. <strong>Traditional data-centers abstracted the hosting environment with limited elasticity and resource pooling. Scaling was achieved by adding more hardware.</strong> Consumers managed the application stack, OS, data, storage, networking and the hardware.</p>\n<p>As cloud technologies evolved, Infrastructure-as-a-Service (IaaS) platforms like Amazon Web Services (AWS), Microsoft Azure, Google Compute Engine (GCE), Joyent, and OpenStack became prevalent. They abstracted away infrastructure components into self-service models for accessing and managing compute (VMs or bare-metal), object storage, block storage, and networking services via APIs, and billed based on consumption.\n<strong>Virtualized data-centers abstracted the underlying infrastructure. Scaling was achieved by allocating more compute (VMs) and other infrastructure resources.</strong> Consumers managed the application stack, data, and OS, while the IaaS provider managed the virtualization, servers, hard drives, storage, and networking.</p>\n<p>Platform-as-a-Service (PaaS), added another layer of abstraction on top of the IaaS components, by providing a unified computing platform with a self-service portal to deploy applications. PaaS software platforms like AWS Elastic Beanstalk, Windows Azure, Heroku, Force.com, Google App Engine, Pivotal CF, Apprenda, RedHat Openshift are some popular examples. <strong>PaaS abstracted the management of infrastructure services, with scalability, high-availability, and multi-tenancy as it&apos;s core tenets.</strong> Consumers managed the application stack and data, while the PaaS provider managed the OS, virtualization, servers, storage, and networking.</p>\n<p>Containerization extended the virtualization solution by making it lightweight using fewer resources and faster boot times. It provided a portable runtime across OSs and a lightweight distribution &amp; packaging mechanism for applications along with its dependencies. PaaS platforms use containers to manage and orchestrate applications. Containerization promoted the micro-services architecture pattern, by encapsulating &amp; isolating reusable functional components as services. Container service providers like Docker Data Center, Amazon ECS, Google Cloud Platform, and Microsoft Azure are some popular examples. <strong>Container runtime engines abstracted the OS.</strong> Consumers manage the application stack and data, while the container service provider manages the container engine, host OS, servers, storage, and networking.</p>\n<p>In the last few years, AWS Lambda made the serverless computing platform accessible to the masses, thus bringing another round of abstraction in play. The Functions-as-a-service (FaaS) paradigm promotes self-contained, stateless chunks of code packaged into &apos;functions&apos;, that can be run or triggered, in ephemeral containers. All done, without managing the underlying infrastructure or the language runtime needed by the code. The unit of deployment is functions. Microsft Azure Functions, Google Cloud Functions, IBM Openwhisk, Webtask.io, and Iron.io are few examples of serverless providers. <strong>Serverless computing abstracted the language runtime.</strong> Consumers manage the application code in units of functions, while the serverless cloud provider manages the execution environment and everything else under it.</p>\n<h3 id=\"what-is-serverless\">What Is Serverless?</h3>\n<p>Just like wireless internet has wires somewhere, serverless architectures still have servers somewhere. What makes something serverless is, that as a developer you don&#x2019;t have to worry or think about those servers. You can just focus on code.</p>\n<p>There are 4 core tenets you should know about:</p>\n<ol>\n<li><p><strong>Zero Administration</strong>:\nThis is the most exciting thing about serverless. Whereas previous abstractions like VMs and containers still shared a lot of the same configuration and administration properties of servers, serverless is a completely different experience. When you&apos;re ready to deploy code, you don&apos;t have to provision anything beforehand, or manage anything afterward. There is no concept of a fleet, an instance, or even an operating system. Everything runs in the cloud and the provider manages scaling for you.</p>\n</li>\n<li><p><strong>Pay-per-execution</strong>:\nThis is what typically incentivizes developers to try serverless for the first time. It&#x2019;s alluring to have complete resource utilization without paying a cent for idle time. This tenet alone results in over 90% cost-savings over a cloud VM and immeasurable developer satisfaction in knowing that you never have to pay for resources that you don&#x2019;t use.</p>\n</li>\n<li><p><strong>Function as unit of deployment</strong>:\nServerless architectures are composed of very small, independent bits of code (functions) that are loosely coupled and collaborative&#x2014;also known as a microservice architecture. The main advantage? Pieces of the system are contained. They can be developed and deployed independently. The result is fewer blockers and far greater developer autonomy and productivity.</p>\n</li>\n<li><p><strong>Event-Driven</strong>:\nThis aspect of serverless is the most under-the-radar right now, but is shaping up to be the most important in the long-term. Serverless functions are stateless, and essentially dormant, until they have an event to react to. The event is what brings them to life and provides them with the data/context to do their job. Event-driven architectures are nothing new, but the rise of serverless compute has renewed interest in them because serverless architectures are by definition event-driven.</p>\n</li>\n</ol>\n<hr>\n<p><strong>Credits:</strong> Rupak Ganguly (@rupakg), Nick Gottlieb (@worldsoup)</p>\n<hr>\n","dir":"ltr"}
+    ====================================================================================================
+    file = {"path":"../../source/README.md","mtime":"2018-03-02T05:17:24.904Z","type":"markdown"}
+    ====================================================================================================
+    readme = {"file":{"path":"book_README.md","mtime":"2018-03-02T07:17:48.228Z","type":"markdown"}}
+    ====================================================================================================
+    glossary = {"entries":{}}
+    ====================================================================================================
+    summary = {"file":{"path":"book_SUMMARY.md","mtime":"2018-03-02T07:17:48.228Z","type":"markdown"},"parts":[{"title":"","articles":[{"title":"Introduction","level":"1.1","depth":1,"path":"book_README.md","ref":"book_README.md","articles":[]},{"title":"Introduction","level":"1.2","depth":1,"path":"../../source/README.md","ref":"../../source/README.md","articles":[{"title":"The Evolution","level":"1.2.1","depth":2,"anchor":"#the-evolution","path":"../../source/README.md","ref":"../../source/README.md#the-evolution","articles":[]},{"title":"What Is Serverless?","level":"1.2.2","depth":2,"anchor":"#what-is-serverless","path":"../../source/README.md","ref":"../../source/README.md#what-is-serverless","articles":[]},{"title":"Serverless In The Cloud Computing Paradigm","level":"1.2.3","depth":2,"ref":"","articles":[]},{"title":"Serverless vs. PaaS","level":"1.2.4","depth":2,"ref":"","articles":[]}]},{"title":"Architecture","level":"1.3","depth":1,"path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md","articles":[{"title":"A Look Back","level":"1.3.1","depth":2,"ref":"","articles":[{"title":"The Monolithic Architecture","level":"1.3.1.1","depth":3,"anchor":"#the-monolithic-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-monolithic-architecture","articles":[]},{"title":"The Service Oriented Architecture","level":"1.3.1.2","depth":3,"anchor":"#the-service-oriented-architecture-soa","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-service-oriented-architecture-soa","articles":[]},{"title":"The Microservices Architecture","level":"1.3.1.3","depth":3,"anchor":"#the-microservices-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-microservices-architecture","articles":[]}]},{"title":"The Serverless Architecture","level":"1.3.2","depth":2,"anchor":"#the-serverless-architecture","path":"../../source/architecture/README.md","ref":"../../source/architecture/README.md#the-serverless-architecture","articles":[{"title":"Patterns for Partitioning Code","level":"1.3.2.1","depth":3,"ref":"","articles":[]}]}]},{"title":"Adoption","level":"1.4","depth":1,"path":"../../source/adoption/README.md","ref":"../../source/adoption/README.md","articles":[]},{"title":"Development","level":"1.5","depth":1,"path":"../../source/dev/README.md","ref":"../../source/dev/README.md","articles":[{"title":"Culture","level":"1.5.1","depth":2,"ref":"","articles":[]},{"title":"Pathway to Serverless Development","level":"1.5.2","depth":2,"ref":"","articles":[]},{"title":"Project Structure","level":"1.5.3","depth":2,"ref":"","articles":[]},{"title":"Deployment","level":"1.5.4","depth":2,"ref":"","articles":[]},{"title":"Testing","level":"1.5.5","depth":2,"path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md","articles":[{"title":"Unit Testing","level":"1.5.5.1","depth":3,"anchor":"#unit-testing","path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md#unit-testing","articles":[]},{"title":"Integration Testing","level":"1.5.5.2","depth":3,"anchor":"#integration-testing","path":"../../source/dev/testing.md","ref":"../../source/dev/testing.md#integration-testing","articles":[]}]},{"title":"Debugging","level":"1.5.6","depth":2,"ref":"","articles":[]},{"title":"Examples","level":"1.5.7","depth":2,"ref":"","articles":[]}]},{"title":"Toolsets","level":"1.6","depth":1,"ref":"","articles":[{"title":"Frameworks","level":"1.6.1","depth":2,"ref":"","articles":[{"title":"Apex","level":"1.6.1.1","depth":3,"ref":"","articles":[]},{"title":"Chalice","level":"1.6.1.2","depth":3,"ref":"","articles":[]},{"title":"Serverless Application Model (SAM)","level":"1.6.1.3","depth":3,"ref":"","articles":[]},{"title":"Serverless Framework","level":"1.6.1.4","depth":3,"ref":"","articles":[]}]}]},{"title":"Operations","level":"1.7","depth":1,"path":"../../source/ops/README.md","ref":"../../source/ops/README.md","articles":[]},{"title":"Security","level":"1.8","depth":1,"path":"../../source/security/README.md","ref":"../../source/security/README.md","articles":[{"title":"General","level":"1.8.1","depth":2,"anchor":"#security","path":"../../source/security/README.md","ref":"../../source/security/README.md#security","articles":[{"title":"What are the new concerns and challenges?","level":"1.8.1.1","depth":3,"anchor":"#what-are-the-new-concerns-and-challenges","path":"../../source/security/README.md","ref":"../../source/security/README.md#what-are-the-new-concerns-and-challenges","articles":[]},{"title":"Are existing security best practices relevant?","level":"1.8.1.2","depth":3,"anchor":"#are-existing-security-best-practices-relevant","path":"../../source/security/README.md","ref":"../../source/security/README.md#are-existing-security-best-practices-relevant","articles":[]}]},{"title":"Pros Of Serverless","level":"1.8.2","depth":2,"anchor":"#pros-of-serverless","path":"../../source/security/README.md","ref":"../../source/security/README.md#pros-of-serverless","articles":[]},{"title":"A Dynamic Attack Surface Area","level":"1.8.3","depth":2,"anchor":"#a-dynamic-attack-surface-area","path":"../../source/security/README.md","ref":"../../source/security/README.md#a-dynamic-attack-surface-area","articles":[]},{"title":"Data At Rest And Data In Transit","level":"1.8.4","depth":2,"anchor":"#data-at-rest-and-data-in-transit","path":"../../source/security/README.md","ref":"../../source/security/README.md#data-at-rest-and-data-in-transit","articles":[]},{"title":"Application Vulnerabilities","level":"1.8.5","depth":2,"anchor":"#application-vulnerabilities","path":"../../source/security/README.md","ref":"../../source/security/README.md#application-vulnerabilities","articles":[]},{"title":"Access Management","level":"1.8.6","depth":2,"anchor":"#access-management","path":"../../source/security/README.md","ref":"../../source/security/README.md#access-management","articles":[]},{"title":"Access Segmentation","level":"1.8.7","depth":2,"anchor":"#access-segmentation","path":"../../source/security/README.md","ref":"../../source/security/README.md#access-segmentation","articles":[]},{"title":"Best Practices","level":"1.8.8","depth":2,"anchor":"#best-practices","path":"../../source/security/README.md","ref":"../../source/security/README.md#best-practices","articles":[]}]},{"title":"Providers","level":"1.9","depth":1,"path":"../../source/providers/README.md","ref":"../../source/providers/README.md","articles":[{"title":"Commercial Hosted Platforms","level":"1.9.1","depth":2,"anchor":"#commercial-hosted-platforms","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#commercial-hosted-platforms","articles":[{"title":"A Comparative Look","level":"1.9.1.1","depth":3,"anchor":"#a-comparative-look","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#a-comparative-look","articles":[]},{"title":"AWS Lambda","level":"1.9.1.2","depth":3,"path":"../../source/providers/aws.md","ref":"../../source/providers/aws.md","articles":[]},{"title":"Azure Functions","level":"1.9.1.3","depth":3,"path":"../../source/providers/azure.md","ref":"../../source/providers/azure.md","articles":[]},{"title":"Google Cloud Functions","level":"1.9.1.4","depth":3,"path":"../../source/providers/gcf.md","ref":"../../source/providers/gcf.md","articles":[]},{"title":"IBM Cloud Functions","level":"1.9.1.5","depth":3,"path":"../../source/providers/ibm-cloud.md","ref":"../../source/providers/ibm-cloud.md","articles":[]}]},{"title":"Opensource Platforms","level":"1.9.2","depth":2,"anchor":"#opensource-platforms","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#opensource-platforms","articles":[{"title":"A Comparative View","level":"1.9.2.1","depth":3,"anchor":"#a-comparative-view","path":"../../source/providers/README.md","ref":"../../source/providers/README.md#a-comparative-view","articles":[]},{"title":"Kubeless","level":"1.9.2.2","depth":3,"path":"../../source/providers/kubeless.md","ref":"../../source/providers/kubeless.md","articles":[]},{"title":"Apache OpenWhisk","level":"1.9.2.3","depth":3,"ref":"","articles":[]},{"title":"OpenFaaS","level":"1.9.2.4","depth":3,"ref":"","articles":[]}]}]},{"title":"Case Studies","level":"1.10","depth":1,"path":"../../source/case_studies/README.md","ref":"../../source/case_studies/README.md","articles":[]},{"title":"Glossary","level":"1.11","depth":1,"path":"../../source/glossary.md","ref":"../../source/glossary.md","articles":[]}]}]}
+    ====================================================================================================
+    languages = 
+    ====================================================================================================
+    output = {"name":"ebook"}
+    ====================================================================================================
+    config = {"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"book_README.md","glossary":"GLOSSARY.md","summary":"book_SUMMARY.md"},"variables":{},"title":"Serverless Guide","language":"en","gitbook":"*","direction":"ltr"}
+    ====================================================================================================
+
+- - - -
+
+idea #2..
+
+* would changing the value of "file.path" effect the relative path to the css files?
+
+* could a custom layout template be used to inject the additional css files?
+  * it would restrict the HTML files to the $TEMP directory
+  * it could (possibly) make the appropriate css files link properly..
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/node_modules/gitbook-plugin-theme-default/_layouts/ebook/page.html
+
+add after:
+  {% block style %}
+(attempt #1) insert tags:
+    {% set file.$path = file.path %}
+    {% set file.path  = file.path.replace(/^\.\.\/\.\.\/source\//, '') %}
+(attempt #2) insert tags:
+    {% set old_path = file.path %}
+    {% set regExp = r/^\.\.\/\.\.\/source\//g %}
+    {% set file.path %}
+      {{ file.path | replace(regExp, "") }}
+    {% endset %}
+
+notes:
+* this template engine doesn't allow adhoc javascript expressions
+* there doesn't seem to be a way to change this template variable
+
+- - - -
+
+idea #3..
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  currentFile = currentFile.replace(/^\.\.\/\.\.\/source\//, '')
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  currentFile = outputFolder + '/' + currentFile.replace(/^\.\.\/\.\.\/source\//, '')
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="../../../../../../../../../../../../../../../_z/t4/serverless-guide/ebook/src/gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="../../../../../../../../../../../../../../../_z/t4/serverless-guide/ebook/src/gitbook/pdf.css">
+  * where:
+    => 404
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  if (currentFile.substr(0,2) === '..') {
+    let absolute_path_components = outputFolder.split(/[\\\/]/)
+    if (absolute_path_components.length >= 3) {
+      let relative_path_base = ['..'].concat(absolute_path_components.slice(-2))
+
+      // console.log(relative_path_base); process.exit(0);
+      currentFile = relative_path_base.join('/') + '/' + currentFile.replace(/^\.\.\/\.\.\/source\//, '')
+    }
+  }
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="../../../.scripts/gitbook/pdf.css">
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  if (currentFile.substr(0,2) === '..') {
+    let absolute_path_components = outputFolder.split(/[\\\/]/)
+    if (absolute_path_components.length >= 3) {
+      let relative_path_base = ['..'].concat(absolute_path_components.slice(-2))
+
+      outputFolder = relative_path_base.join('/')
+      currentFile = currentFile.replace(/^\.\.\/\.\.\/source\//, '')
+    }
+  }
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="../../../.scripts/gitbook/pdf.css">
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  if (currentFile.substr(0,2) === '..') {
+    let absolute_path_components = outputFolder.split(/[\\\/]/)
+    if (absolute_path_components.length >= 3) {
+      let relative_path_base = ['..'].concat(absolute_path_components.slice(-2))
+
+      filePath = relative_path_base.join('/') + '/gitbook/' + filePath
+      //console.log(filePath); process.exit(0);
+      return filePath
+    }
+  }
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="../.temp/tmp-6404BZTiVOPlaHzc/gitbook/pdf.css">
+notes:
+  * this is a contrived example
+    - it works for HTML files under: $HOME/source
+    - but not HTML files within subdirectories
+
+- - - -
+
+javascript console tests...
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = outputFolder.split(regex.path_sep).slice(0, -up_count)
+
+console.log(up_count, dn_count, base_path)
+}; void(0)
+// 2 1 ["C:", "path", "to", "home"]
+
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+
+    let regex = {
+      "path_sep":    /[\\\/]/
+    }
+
+    let up_count = currentFile.split('/').length - 1
+    let base_path = outputFolder.split(regex.path_sep).slice(0, -up_count)
+
+console.log(up_count, base_path)
+}; void(0)
+// 3 ["C:", "path", "to"]
+
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(up_count + dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+console.log(up_count, dn_count, base_path)
+}; void(0)
+// 2 1 "../../../.temp/tmp-12345"
+
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(up_count - 2 + dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+console.log(up_count, dn_count, base_path)
+}; void(0)
+2 1 "../.temp/tmp-12345"
+
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+let filePath = 'pdf.css'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(up_count - 2 + dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+
+console.log(up_count, dn_count, base_path, filePath)
+}; void(0)
+// 2 1 "../.temp/tmp-12345" "../.temp/tmp-12345/gitbook/pdf.css"
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+
+within function:
+  resolveAsset: function(filePath) {...}
+prepend:
+  if (currentFile.substr(0,2) === '..') {
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(up_count - 2 + dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+    return filePath
+  }
+result (in converted HTML):
+  * $TEMP/tmp-YYYYY/index.html
+      <link rel="stylesheet" href="gitbook/pdf.css">
+  * $HOME/source/index.html
+      <link rel="stylesheet" href="../.temp/tmp-3516fpUzjELn4KHf/gitbook/pdf.css">
+  * $HOME/source/security/index.html
+      <link rel="stylesheet" href="../../.temp/tmp-3516fpUzjELn4KHf/gitbook/pdf.css">
+notes:
+  * this is a general solution
+  * the resulting PDF document is formatted nicely
+    - identical to the way it was before,
+      when all of the MD files had a common root directory
+
+- - - -
+
+partial fix #1:
+===============
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+
+after function declaration:
+    function getPageByPath(filePath) {...}
+add new function declaration:
+    function resolveFileNotWithinRoot(filePath) {
+        if (currentFile.substr(0,2) === '..') {
+          let regex = {
+            "path_sep":    /[\\\/]/,
+            "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+          }
+
+          let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+          let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+          let base_path = ('../').repeat(up_count - 2 + dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+          filePath = base_path + '/gitbook/' + filePath
+          return filePath
+        }
+        return false
+    }
+
+update function declaration(s):
+            resolveFile: function(filePath) {
+            resolveAsset: function(filePath) {
+foreach, prepend to body:
+                let resolvedPath = resolveFileNotWithinRoot(filePath)
+                if (resolvedPath) return resolvedPath
+
+notes:
+======
+* this does NOT fix the fact that HTML files are saved outside of the $TEMP directory
+* this DOES fix the relative paths linking these HTML files to CSS stylesheets that ARE stored inside of $TEMP
+
+- - - -
+
+javascript console tests...
+
+{
+let currentFile = '../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+let filePath = 'pdf.css'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+
+console.log(up_count, dn_count, base_path, filePath)
+}; void(0)
+// 1 1 "../tmp-12345" "../tmp-12345/gitbook/pdf.css"
+
+
+{
+let currentFile = '../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+let filePath = 'pdf.css'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+
+console.log(up_count, dn_count, base_path, filePath)
+}; void(0)
+// 2 1 "../.temp/tmp-12345" "../.temp/tmp-12345/gitbook/pdf.css"
+
+
+{
+let currentFile = '../../../source/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+let filePath = 'pdf.css'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+
+console.log(up_count, dn_count, base_path, filePath)
+}; void(0)
+// 3 1 "../home/.temp/tmp-12345" "../home/.temp/tmp-12345/gitbook/pdf.css"
+
+
+{
+let currentFile = '../../../source/security/index.html'
+let outputFolder = 'C:\\path\\to\\home\\.temp\\tmp-12345'
+let filePath = 'pdf.css'
+
+    let regex = {
+      "path_sep":    /[\\\/]/,
+      "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+    }
+
+    let up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1
+    let dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1
+    let base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/')
+
+    filePath = base_path + '/gitbook/' + filePath
+
+console.log(up_count, dn_count, base_path, filePath)
+}; void(0)
+// 3 2 "../../home/.temp/tmp-12345" "../../home/.temp/tmp-12345/gitbook/pdf.css"
+
+- - - -
+
+partial fix #2:
+===============
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+
+after function declaration:
+    function getPageByPath(filePath) {...}
+add new function declaration:
+    function resolveFileNotWithinRoot(filePath) {
+        if (currentFile.substr(0,2) === '..') {
+            var regex = {
+                "path_sep":    /[\\\/]/,
+                "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+            };
+
+            var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+            var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+            var base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+
+            filePath = base_path + '/gitbook/' + filePath;
+            return filePath;
+        }
+        return false;
+    }
+
+update function declaration(s):
+            resolveFile: function(filePath) {
+            resolveAsset: function(filePath) {
+foreach, prepend to body:
+                var resolvedPath = resolveFileNotWithinRoot(filePath);
+                if (resolvedPath) return resolvedPath;
+
+notes:
+======
+* this does NOT fix the fact that HTML files are saved outside of the $TEMP directory
+* this DOES fix the relative paths linking these HTML files to CSS stylesheets that ARE stored inside of $TEMP
+
+- - - -
+
+commit:
+=======
+https://github.com/warren-bank/gitbook/commit/50030a8f6835ddfb9cd366e0871653e622594dd9
+https://github.com/warren-bank/gitbook/commit/8d651686a6a7eb1054d8fd69b5ec0b92758abd7a
+
+PR:
+===
+https://github.com/GitbookIO/gitbook/pull/1992
+
+commit message:
+===============
+improve support for linking SUMMARY.md to sources outside root dir
+
+* this does NOT fix the fact that HTML files are saved outside of the $TEMP directory
+  * root directory is mapped to: `$TEMP/tmp-12345`
+  * relative paths can escape this directory:
+    * `../foo.md` => `$TEMP/foo.html`
+    * `../../bar.md` => `$TEMP/../bar.html`
+    * `../../../baz.md` => `$TEMP/../../baz.html`
+    * `../../foo/bar/baz.md` => `$TEMP/../foo/bar/baz.html`
+      * directory structure is created
+      * `foo` directory becomes a sibling to `$TEMP`
+
+* this DOES fix the relative paths linking these HTML files to CSS stylesheets that ARE stored inside of $TEMP
+
+- - - -
+
+status:
+=======
+* nearly perfect
+
+what's not working:
+===================
+* links to images are broken:
+  * from html files under: $HOME/source/
+  * to: $TEMP/tmp-12345/abc.jpg
+* example:
+  * file:
+      $HOME\source\providers\ibm-cloud.html
+    contains:
+      <h3 id="how-it-works">How It Works</h3>
+      <p><img src="../../ebook/.scripts/59f786f4.png"></p>
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relativeForFile(baseFile, file) {
+    return relative(path.dirname(baseFile), file);
+}
+
+function relative(dir, file) {
+    var isDirectory = file.slice(-1) === '/';
+    return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+}
+
+function normalize(s) {
+    return path.normalize(s).replace(/\\/g, '/');
+}
+
+notes:
+======
+* surprisingly, there's very little custom logic
+* all of the work is being done by: require('path').relative(dir, file)
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/conrefsLoader.js
+
+code summary:
+=============
+    resolve: function(from, to) {
+        if (PathUtils.isInRoot(this.rootFolder, from))
+            return PathUtils.resolveInRoot(this.rootFolder, href);
+        else
+            return path.resolve(path.dirname(from), to);
+    }
+
+notes:
+======
+* this code never gets called
+* not the culprit
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+code summary:
+=============
+function onPage(output, page) {
+    ...
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+}
+
+notes:
+======
+* bingo..
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = ../ebook/.scripts
+    - outputDirName = ../../source/security
+      basePath = ../../ebook/.scripts
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+possible patch #1:
+==================
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    function resolveFileNotWithinRoot() {
+        var outputFolder = output.getRoot();
+        var currentFile = outputDirName;
+
+        if (currentFile.substr(0,2) === '..') {
+            var regex = {
+                "path_sep":    /[\\\/]/,
+                "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+            };
+
+            var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+            var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+            basePath = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+        }
+    }
+    resolveFileNotWithinRoot();
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+
+result:
+=======
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = .temp/tmp-6788Mk1g5cRlAI7m
+    - outputDirName = ../../source/security
+      basePath = ../.temp/tmp-6788Mk1g5cRlAI7m
+
+* images are still 404:
+    <img src="../../ebook/.scripts/59f786f4.png">
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/onPage.js
+
+possible patch #2:
+==================
+    var filePath = fileToOutput(output, file.getPath());
+    var outputDirName = path.dirname(filePath);
+    var basePath = LocationUtils.normalize(path.relative(outputDirName, './'));
+
+    function resolveFileNotWithinRoot() {
+        var outputFolder = output.getRoot();
+        var currentFile = outputDirName + '/';
+
+        if (currentFile.substr(0,2) === '..') {
+            var regex = {
+                "path_sep":    /[\\\/]/,
+                "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+            };
+
+            var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+            var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+            basePath = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+        }
+    }
+    resolveFileNotWithinRoot();
+
+    ...
+    return Templating.renderFile(engine, prefix + '/page.html', context)
+
+result:
+=======
+* sample stack traces:
+    - outputDirName = .
+      basePath = .
+    - outputDirName = ../../source
+      basePath = ../.temp/tmp-4316Hj8WoULI5ZKl
+    - outputDirName = ../../source/security
+      basePath = ../../.temp/tmp-4316Hj8WoULI5ZKl
+
+* images are still 404:
+    <img src="../../ebook/.scripts/59f786f4.png">
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/renderFile.js
+
+var render = require('./render');
+...
+return render(engine, result.path, result.src, context);
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/templating/render.js
+
+var TemplateOutput = require('../models/templateOutput');
+...
+return TemplateOutput.create(content, blocks);
+
+notes:
+======
+* "content" is markdown
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/models/templateOutput.js
+
+notes:
+======
+* dead end..
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/generatePage.js
+
+code summary:
+=============
+  // get markdown
+  var output = Templating.render(engine, absoluteFilePath, content, context)
+  var content = output.getContent()
+
+  // convert markdown to html
+  var result = parser.parsePage(content)
+
+  // inspect an image link
+  if (filePath.indexOf('ibm-cloud') >= 0) {
+    let html = result.content
+    let regex = /<img src="([^"]+)"/g
+    let images = []
+    let image
+
+    while ((image = regex.exec(html)) !== null) {
+      images.push(image[1])
+    }
+
+    console.log(images)
+    process.exit(1)
+  }
+
+  // <h3>How It Works</h3>
+  // <p><img src="https://cdn.thenewstack.io/media/2017/01/fb6d2769-openwhisk_arch.png" alt="IBM Cloud Functions Architecture"></p>
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/modifiers/fetchRemoteImages.js
+
+code summary:
+=============
+// remote URL
+var src = $img.attr('src')
+
+// local filename from hash
+var hash = crc.crc32(src).toString(16);
+var fileName = hash + extension;
+var filePath = path.join(rootFolder, fileName);
+
+// download image
+fs.download(src, filePath)
+
+// modify <img> tag
+src = LocationUtils.relative(currentDirectory, fileName);
+$img.replaceWith('<img src="' + src + '" />')
+
+notes:
+======
+* LocationUtils.relative() is where things break
+  * stack trace:
+    * ../../ebook/.scripts/59f786f4.png
+
+- - - -
+
+conclusions:
+============
+
+the ideal function to patch would be..
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relative(dir, file) {
+    var isDirectory = file.slice(-1) === '/';
+    return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+}
+
+notes:
+======
+* how can this library obtain "outputFolder"?
+* if it can, then the earlier patches can be removed..
+  this is as far upstream as it gets..
+  all consumers would reap the benefit
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/models/output.js
+
+Output.prototype.getRoot = function() {
+    return this.getOptions().get('root');
+};
+
+Output.prototype.getOptions = function() {
+    return this.get('options');
+};
+
+module.exports = Output;
+
+- - - -
+
+possible patch #1
+=================
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+
+function relative(dir, file) {
+    if (dir.substr(0,2) === '..') {
+        var outputFolder = require('../models/output').getRoot();
+        var currentFile = dir + '/';
+
+        var regex = {
+            "path_sep":    /[\\\/]/,
+            "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+        };
+
+        var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+        var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+        var base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+
+        var filePath = base_path + '/' + file;
+        return filePath;
+    }
+    else {
+        var isDirectory = file.slice(-1) === '/';
+        return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+    }
+}
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/website/createTemplateEngine.js
+  => no changes needed
+
+result:
+=======
+* made a mistake
+  * require('../models/output') is a class
+  * I need the instance of this class that's in use
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/generateBook.js
+
+code summary:
+=============
+generateBook() returns a Promise that resolves to: output
+
+module.exports = generateBook;
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/output/index.js
+
+code summary:
+=============
+module.exports = {
+    generate: require('./generateBook')
+}
+
+- - - -
+
+file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+
+code summary:
+=============
+var options = require('./options');
+var tmp = require('tmp');
+var Output = require('../output');
+...
+var outputFolder = tmp.dirSync().name;
+var output = Output.generate(Generator, resultBook, {
+    root: outputFolder,
+    format: format
+});
+
+thoughts:
+=========
+* what if the value of "outputFolder" was stored in "options" while the build is running, and then removed afterward?
+* even if multiple processes were running concurrently, they don't share memory..
+  * each maintains its own "require.cache"
+    * https://stackoverflow.com/questions/38588196/node-js-require-same-module-in-child-process
+
+patches:
+========
+* in file:
+    ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+* after:
+    var outputFolder = tmp.dirSync().name;
+  insert:
+    options.outputFolder = outputFolder
+
+* in file:
+    ebook/node_modules/gitbook/versions/3.2.3/lib/cli/buildEbook.js
+* before:
+    return logger.debug.promise(fs.rmDir(outputFolder));
+  insert:
+    delete options.outputFolder
+
+* in file:
+  ebook/node_modules/gitbook/versions/3.2.3/lib/utils/location.js
+* update:
+function relative(dir, file) {
+    if (dir.substr(0,2) === '..') {
+        var outputFolder = require('../cli/options').outputFolder;
+        var currentFile = dir + '/';
+
+        var regex = {
+            "path_sep":    /[\\\/]/,
+            "currentFile": /^((?:\.\.\/)+)([^\.].*)$/
+        };
+
+        var up_count = currentFile.replace(regex.currentFile, '$1').split('/').length - 1;
+        var dn_count = currentFile.replace(regex.currentFile, '$2').split('/').length - 1;
+        var base_path = ('../').repeat(dn_count) + outputFolder.split(regex.path_sep).slice(-up_count).join('/');
+
+        var filePath = base_path + '/' + file;
+        return filePath;
+    }
+    else {
+        var isDirectory = file.slice(-1) === '/';
+        return normalize(path.relative(dir, file)) + (isDirectory? '/': '');
+    }
+}
+
+result:
+=======
+* success!!
+
+- - - -
