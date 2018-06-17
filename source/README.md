@@ -8,7 +8,9 @@ layout: Doc
 
 ## Introduction
 
-Our world moves faster than ever due to an unprecedented rate of technological innovation, especially in software.  Software demand, touch-points and competition are growing simultaneously.  If you're an organization or an entrepreneur looking to succeed, you must move faster, innovate more, at scale, with greater efficiency than ever.  At the same time, strategies that contribute overhead and complexity will cost you greatly.
+Our world moves faster than ever due to an unprecedented rate of technological innovation, especially in software.  
+
+Software demand, touch-points and competition are growing simultaneously.  If you're an organization or an entrepreneur looking to succeed, you must move faster, innovate more, at scale, with greater efficiency than ever.  At the same time, strategies that contribute overhead and complexity will cost you greatly.
 
 ### The Cloud
 
