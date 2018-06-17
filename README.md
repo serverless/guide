@@ -1,11 +1,4 @@
-<!--
-title: Read Me
-menuText: Read Me
-menuOrder: 1
-description: General readme section that covers contribution guidelines, credits, contact info., and license.
-layout: Doc
--->
-![Serverless Guide](/assets/guide_repo.png)
+![Serverless Guide](https://s3.amazonaws.com/assets.github.serverless/readme-serverless-guide-2.png)
 
 *Authored by the community, curated by [Serverless, Inc.](https://serverless.com/)*
 
