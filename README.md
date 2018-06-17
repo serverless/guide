@@ -1,16 +1,14 @@
 ![Serverless Guide](https://s3.amazonaws.com/assets.github.serverless/readme-serverless-guide-2.png)
 
-*Authored by the community, curated by [Serverless, Inc.](https://serverless.com/)*
+*Authored by [Serverless, Inc.](https://serverless.com/)*
 
 ## Vision
 
-This is your definitive guide to serverless architectures. Inside, you will find everything you need to know about serverless development and how to be a serverless organization: patterns, best practices, case studies and everything in-between.
+This is your definitive guide to serverless applications, teams & culture authored by [Serverless, Inc.](https://serverless.com/).
 
-Aside from implementation, this guide is a collection and discussion of concerns around the state and maturity of serverless. A lot is being written about serverless technology all over the web, and right now that information is fragmented. As a community, we’re bringing it together.
+Inside, is practical guidance on operationalizing serverless development and how to be a serverless organization, including analysis, patterns, best practices & more.  
 
-The goal is to create a one-of-a-kind, trusted resource for developers, architects and thought leaders. This should be a valuable resource that will help drive adoption and innovation of serverless architectures.
-
-Are you with us? We want [you to be part](./README.md#how-to-contribute) of this journey.
+This is a trusted resource for developers, managers and business leaders alike.
 
 ## Table of Contents
 

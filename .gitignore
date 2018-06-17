@@ -33,3 +33,5 @@ node_modules
 # OS stuff
 .DS_Store
 .tmp
+
+scratch.md
