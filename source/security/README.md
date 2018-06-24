@@ -90,5 +90,5 @@ To summarize, these are a few recommendations that will help you secure your ser
 - Carefully examine granting permissions that allow creation, modification or removal of the resources
 
 ***
-**Credits:** Zohar Einy (@ZoharEiny), Avi Shulman (@avi-puresec)
+**Credits:** Zohar Einy (@Zohar2506), Avi Shulman (@avi-puresec)
 ***
